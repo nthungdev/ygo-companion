@@ -1,0 +1,41 @@
+{
+  "project_info": {
+    "project_number": "323406512187",
+    "firebase_url": "https://ygo-companion-vn.firebaseio.com",
+    "project_id": "ygo-companion-vn",
+    "storage_bucket": "ygo-companion-vn.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:323406512187:android:9cb762dedf10e4b20f1c1e",
+        "android_client_info": {
+          "package_name": "com.hungnguyensoftwares.ygocompanion"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "323406512187-7brj42nj8157e489eb377jtssqufsoko.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCrpH1mMCjzvOxksP-osjBSau5vEM-2mo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "323406512187-7brj42nj8157e489eb377jtssqufsoko.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      },
+      "admob_app_id": "ca-app-pub-2953470737526040~2683505210"
+    }
+  ],
+  "configuration_version": "1"
+}

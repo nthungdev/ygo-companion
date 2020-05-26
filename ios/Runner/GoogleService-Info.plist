@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>323406512187-rvg72b2ma7oe58sg0uv8s32cql2h7vpm.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.323406512187-rvg72b2ma7oe58sg0uv8s32cql2h7vpm</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDzTUnouy8foncKSQfs8Oh9Xzva6fqjWS0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>323406512187</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.hungnguyensoftwares.ygocompanion</string>
+	<key>PROJECT_ID</key>
+	<string>ygo-companion-vn</string>
+	<key>STORAGE_BUCKET</key>
+	<string>ygo-companion-vn.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:323406512187:ios:317602200b4452200f1c1e</string>
+	<key>DATABASE_URL</key>
+	<string>https://ygo-companion-vn.firebaseio.com</string>
+</dict>
+</plist>

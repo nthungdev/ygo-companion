@@ -1,4 +1,4 @@
-package com.example.ygo_companion
+package com.hungnguyensoftwares.ygocompanion
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

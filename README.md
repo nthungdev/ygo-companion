@@ -9,7 +9,7 @@ lib/
   app.dart
   main.dart
   theme.dart
-  providers/
+  states/
   screens/
     screen_a/
     screen_b/
