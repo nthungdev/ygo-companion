@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/ygo-companion/static/css/main.d94cf6d8.chunk.css",
+    "main.js": "/ygo-companion/static/js/main.19a9d26b.chunk.js",
+    "main.js.map": "/ygo-companion/static/js/main.19a9d26b.chunk.js.map",
+    "runtime-main.js": "/ygo-companion/static/js/runtime-main.b4894afa.js",
+    "runtime-main.js.map": "/ygo-companion/static/js/runtime-main.b4894afa.js.map",
+    "static/js/2.a1dd1049.chunk.js": "/ygo-companion/static/js/2.a1dd1049.chunk.js",
+    "static/js/2.a1dd1049.chunk.js.map": "/ygo-companion/static/js/2.a1dd1049.chunk.js.map",
+    "index.html": "/ygo-companion/index.html",
+    "precache-manifest.3388f973a0aeeba50a5f9ecab8943ec0.js": "/ygo-companion/precache-manifest.3388f973a0aeeba50a5f9ecab8943ec0.js",
+    "service-worker.js": "/ygo-companion/service-worker.js",
+    "static/css/main.d94cf6d8.chunk.css.map": "/ygo-companion/static/css/main.d94cf6d8.chunk.css.map",
+    "static/js/2.a1dd1049.chunk.js.LICENSE.txt": "/ygo-companion/static/js/2.a1dd1049.chunk.js.LICENSE.txt",
+    "static/media/logo.svg": "/ygo-companion/static/media/logo.5d5d9eef.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.b4894afa.js",
+    "static/js/2.a1dd1049.chunk.js",
+    "static/css/main.d94cf6d8.chunk.css",
+    "static/js/main.19a9d26b.chunk.js"
+  ]
+}
