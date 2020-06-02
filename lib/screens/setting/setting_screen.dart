@@ -96,9 +96,7 @@ class _SettingScreenState extends State<SettingScreen> {
     return WillPopScope(
       onWillPop: () async {
         final result = await _interstitialAd?.show();
-
         print('_interstitialAd result $result');
-
         return true;
       },
       child: Scaffold(
@@ -113,7 +111,7 @@ class _SettingScreenState extends State<SettingScreen> {
                     CalculatorTypeListTile(),
                     Divider(thickness: 1),
                   ],
-                  SystemThemeCheckboxListTile(),
+                  SystemThemeSwitchListTile(),
                   ThemeSwitchListTile(),
                 ],
               ),
@@ -127,8 +125,6 @@ class _SettingScreenState extends State<SettingScreen> {
                   child: Image.asset(
                     "assets/logo/yutopia_logo.png",
                     fit: BoxFit.contain,
-                    // height: 10,
-                    // width: 10,
                     width: MediaQuery.of(context).size.shortestSide * 0.5,
                   ),
                 ),

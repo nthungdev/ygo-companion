@@ -39,8 +39,8 @@ class ThemeSwitchListTile extends StatelessWidget {
   }
 }
 
-class SystemThemeCheckboxListTile extends StatelessWidget {
-  const SystemThemeCheckboxListTile({
+class SystemThemeSwitchListTile extends StatelessWidget {
+  const SystemThemeSwitchListTile({
     Key key,
     this.onChange,
   }) : super(key: key);
@@ -50,13 +50,19 @@ class SystemThemeCheckboxListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeState = ThemeState.of(context, listen: false);
+    final brightness = Theme.of(context).brightness;
 
-    return CheckboxListTile(
-      title: Text("Use System Theme"),
+    return SwitchListTile.adaptive(
+      title: Text("Auto Dark Mode"),
+      subtitle: Text("Follow OS setting"),
       value: themeState.mode == ThemeMode.system ? true : false,
       activeColor: CompanionTheme.primaryColor,
       onChanged: (usingSystem) {
-        themeState.switchMode(usingSystem ? ThemeMode.system : ThemeMode.light);
+        themeState.switchMode(
+          usingSystem
+              ? ThemeMode.system
+              : brightness == Brightness.light ? ThemeMode.light : ThemeMode.dark,
+        );
       },
     );
   }
