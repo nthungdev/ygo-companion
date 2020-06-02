@@ -1,30 +1,30 @@
 import 'package:flutter/material.dart';
 
-class MainWatch extends StatelessWidget {
-  final Duration watch;
+class MainClock extends StatelessWidget {
+  final Duration clock;
   final Function onTap;
   final Color color;
 
-  const MainWatch({
+  const MainClock({
     Key key,
-    this.watch,
+    this.clock,
     this.onTap,
     this.color,
-  })  : assert(watch != null),
+  })  : assert(clock != null),
         super(key: key);
 
   String get formattedMinutes {
-    if (watch == null)
+    if (clock == null)
       return "00";
     else
-      return (watch.inSeconds ~/ 60).toString().padLeft(2, "0");
+      return (clock.inSeconds ~/ 60).toString().padLeft(2, "0");
   }
 
   String get formattedSeconds {
-    if (watch == null)
+    if (clock == null)
       return "00";
     else
-      return (watch.inSeconds % 60).toString().padLeft(2, "0");
+      return (clock.inSeconds % 60).toString().padLeft(2, "0");
   }
 
   @override

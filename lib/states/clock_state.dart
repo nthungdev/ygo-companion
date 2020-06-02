@@ -2,9 +2,9 @@ import 'dart:async';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
-class WatchState extends ChangeNotifier {
-  static WatchState of(BuildContext context, {bool listen = true}) {
-    return Provider.of<WatchState>(context, listen: listen);
+class ClockState extends ChangeNotifier {
+  static ClockState of(BuildContext context, {bool listen = true}) {
+    return Provider.of<ClockState>(context, listen: listen);
   }
 
   static const Duration _tickFrequency = const Duration(milliseconds: 200);
@@ -22,7 +22,7 @@ class WatchState extends ChangeNotifier {
   bool get isRunningA => _watchA.isRunning;
   bool get isRunningB => _watchB.isRunning;
 
-  WatchState() {
+  ClockState() {
     _watch = Stopwatch();
     _watchA = Stopwatch();
     _watchB = Stopwatch();
@@ -44,39 +44,41 @@ class WatchState extends ChangeNotifier {
   }
 
   void start({
-    bool mainWatch = false,
-    bool watchA = false,
-    bool watchB = false,
+    bool main = false,
+    bool clockA = false,
+    bool clockB = false,
   }) {
-    if (_timer == null) {
-      _timer = Timer.periodic(_tickFrequency, _onTick);
+    if (main || clockA || clockB) {
+      if (_timer == null) {
+        _timer = Timer.periodic(_tickFrequency, _onTick);
+      }
+
+      if (main) _watch.start();
+      if (clockA) _watchA.start();
+      if (clockB) _watchB.start();
+
+      notifyListeners();
     }
-
-    if (mainWatch) _watch.start();
-    if (watchA) _watchA.start();
-    if (watchB) _watchB.start();
-
-    notifyListeners();
   }
 
   void stopAll({bool notifyListeners = true}) {
     stop(
-      mainWatch: true,
-      watchA: true,
-      watchB: true,
+      main: true,
+      clockA: true,
+      clockB: true,
       notifyListeners: notifyListeners,
     );
   }
 
   void stop({
-    bool mainWatch = false,
-    bool watchA = false,
-    bool watchB = false,
+    bool main = false,
+    bool clockA = false,
+    bool clockB = false,
     bool notifyListeners = true,
   }) {
-    if (mainWatch) _watch.stop();
-    if (watchA) _watchA.stop();
-    if (watchB) _watchB.stop();
+    if (main) _watch.stop();
+    if (clockA) _watchA.stop();
+    if (clockB) _watchB.stop();
 
     if (!_watch.isRunning && !_watchA.isRunning && !_watchB.isRunning) {
       _timer?.cancel();
@@ -88,20 +90,20 @@ class WatchState extends ChangeNotifier {
   }
 
   /// Set all watches to 0
-  void resetAll() => reset(watchA: true, watchB: true, mainWatch: true);
+  void resetAll() => reset(clockA: true, clockB: true, main: true);
 
   /// Set selected watches to 0
   void reset({
-    bool mainWatch = false,
-    bool watchA = false,
-    bool watchB = false,
+    bool main = false,
+    bool clockA = false,
+    bool clockB = false,
   }) {
     // stop();
     // _watch.reset();
     // _currentDuration = Duration.zero;
-    if (mainWatch) _watch.reset();
-    if (watchA) _watchA.reset();
-    if (watchB) _watchB.reset();
+    if (main) _watch.reset();
+    if (clockA) _watchA.reset();
+    if (clockB) _watchB.reset();
 
     notifyListeners();
   }

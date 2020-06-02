@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:ygo_companion/states/watch_state.dart';
+import 'package:ygo_companion/states/clock_state.dart';
 
-class PlayerWatch extends StatelessWidget {
+class PlayerClock extends StatelessWidget {
   final double width;
-  final Duration watch;
+  final Duration clock;
   final Color color;
   final VoidCallback onTap;
   final VoidCallback onLongPressed;
   final String label;
   final bool forPlayerA;
 
-  const PlayerWatch({
+  const PlayerClock({
     Key key,
     this.width,
     this.label,
-    this.watch,
+    this.clock,
     this.color,
     this.onTap,
     @required this.forPlayerA,
@@ -74,7 +74,7 @@ class PlayerWatch extends StatelessWidget {
                         flex: 1,
                         child: Align(
                           alignment: Alignment.centerRight,
-                          child: Selector<WatchState, Duration>(
+                          child: Selector<ClockState, Duration>(
                             selector: (_, state) =>
                                 forPlayerA ? state.currentDurationA : state.currentDurationB,
                             builder: (_, watch, __) {
@@ -89,7 +89,7 @@ class PlayerWatch extends StatelessWidget {
                       Text(":", style: textStyle),
                       Expanded(
                         flex: 1,
-                        child: Selector<WatchState, Duration>(
+                        child: Selector<ClockState, Duration>(
                           selector: (_, state) =>
                               forPlayerA ? state.currentDurationA : state.currentDurationB,
                           builder: (_, watch, __) {

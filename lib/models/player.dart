@@ -9,8 +9,8 @@ class Player {
   /// Temporary calculation
   String calculation;
 
-  /// Watch
-  Duration watch;
+  /// Clock
+  Duration clock;
 
   List<String> logs;
 
@@ -18,7 +18,7 @@ class Player {
     this.name,
     this.lp = startingLp,
     this.calculation = "",
-    this.watch = Duration.zero,
+    this.clock = Duration.zero,
     this.logs,
   }) {
     logs = [startingLp.toString()];
@@ -35,7 +35,7 @@ class Player {
       name: name ?? this.name,
       lp: lp ?? this.lp,
       calculation: calculation ?? this.calculation,
-      watch: watch ?? this.watch,
+      clock: clock ?? this.clock,
       logs: logs ?? this.logs,
     );
   }

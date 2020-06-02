@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:ygo_companion/models/player.dart';
-import 'package:ygo_companion/screens/calculator/widgets/calculator_pad_4.dart';
-import 'package:ygo_companion/screens/calculator/widgets/duel_log_4.dart';
-import 'package:ygo_companion/screens/calculator/widgets/main_watch_4.dart';
-import 'package:ygo_companion/screens/calculator/widgets/player_lp_4.dart';
-import 'package:ygo_companion/screens/calculator/widgets/player_watch_4.dart';
+import 'package:ygo_companion/screens/calculator/widgets/calculator_pad_5.dart';
+import 'package:ygo_companion/screens/calculator/widgets/duel_log_5.dart';
+import 'package:ygo_companion/screens/calculator/widgets/main_clock_5.dart';
+import 'package:ygo_companion/screens/calculator/widgets/player_lp_5.dart';
+import 'package:ygo_companion/screens/calculator/widgets/player_clock_5.dart';
 import 'package:ygo_companion/states/theme_state.dart';
 import 'package:ygo_companion/widgets/coin_result.dart';
 import 'package:ygo_companion/widgets/dice_result.dart';
 import 'package:ygo_companion/widgets/icons/custom_icons.dart';
 
 class ProLayout5 extends StatelessWidget {
-  final Duration mainWatchDuration;
-  final Duration watchADuration;
-  final Duration watchBDuration;
+  final Duration mainClockDuration;
+  final Duration clockADuration;
+  final Duration clockBDuration;
   final Player playerA;
   final Player playerB;
   final bool isPlaying;
@@ -30,11 +30,12 @@ class ProLayout5 extends StatelessWidget {
   final VoidCallback onPlayerBLongPress;
   final VoidCallback onPlayerALPTap;
   final VoidCallback onPlayerBLPTap;
-  final VoidCallback onMainWatchTap;
-  final VoidCallback onPlayerAWatchTap;
-  final VoidCallback onPlayerBWatchTap;
-  final VoidCallback onPlayerAWatchLongPressed;
-  final VoidCallback onPlayerBWatchLongPressed;
+  final VoidCallback onMainClockTap;
+  final VoidCallback onMainClockLongPressed;
+  final VoidCallback onPlayerAClockTap;
+  final VoidCallback onPlayerBClockTap;
+  final VoidCallback onPlayerAClockLongPressed;
+  final VoidCallback onPlayerBClockLongPressed;
   final VoidCallback onCoin;
   final VoidCallback onDice;
   final VoidCallback onReset;
@@ -43,21 +44,21 @@ class ProLayout5 extends StatelessWidget {
   const ProLayout5({
     Key key,
     this.onPlayerFocused,
-    this.mainWatchDuration,
-    this.watchADuration,
-    this.watchBDuration,
-    this.onPlayerAWatchTap,
-    this.onPlayerBWatchTap,
+    this.mainClockDuration,
+    this.clockADuration,
+    this.clockBDuration,
+    this.onPlayerAClockTap,
+    this.onPlayerBClockTap,
     this.onPlayerALPTap,
     this.onPlayerBLPTap,
     this.onPlayerALongPress,
     this.onPlayerBLongPress,
     this.playerA,
     this.playerB,
-    this.onPlayerAWatchLongPressed,
-    this.onPlayerBWatchLongPressed,
+    this.onPlayerAClockLongPressed,
+    this.onPlayerBClockLongPressed,
     this.onInputTap,
-    this.onMainWatchTap,
+    this.onMainClockTap,
     this.onPlayerATap,
     this.onPlayerBTap,
     this.playerASelected,
@@ -70,6 +71,7 @@ class ProLayout5 extends StatelessWidget {
     this.isUsingDice = false,
     this.onCloseCoin,
     this.onCloseDice,
+    this.onMainClockLongPressed,
   })  : assert(playerA != null),
         assert(playerB != null),
         super(key: key);
@@ -157,33 +159,33 @@ class ProLayout5 extends StatelessWidget {
                                   SizedBox(width: space),
                                   Expanded(
                                     flex: 1,
-                                    child: PlayerWatch(
-                                      label: "Player A Watch",
-                                      watch: watchADuration,
+                                    child: PlayerClock(
+                                      label: "Player A Clock",
+                                      clock: clockADuration,
                                       color: boxBackgroundColor,
-                                      onTap: onPlayerAWatchTap,
-                                      onLongPressed: onPlayerAWatchLongPressed,
+                                      onTap: onPlayerAClockTap,
+                                      onLongPressed: onPlayerAClockLongPressed,
                                       forPlayerA: true,
                                     ),
                                   ),
                                   SizedBox(width: space),
                                   Expanded(
                                     flex: 2,
-                                    child: MainWatch(
-                                      watch: mainWatchDuration,
-                                      onTap: onMainWatchTap,
+                                    child: MainClock(
+                                      clock: mainClockDuration,
+                                      onTap: onMainClockTap,
                                       color: boxBackgroundColor,
                                     ),
                                   ),
                                   SizedBox(width: space),
                                   Expanded(
                                     flex: 1,
-                                    child: PlayerWatch(
-                                      label: "Player B Watch",
-                                      watch: watchBDuration,
+                                    child: PlayerClock(
+                                      label: "Player B Clock",
+                                      clock: clockBDuration,
                                       color: boxBackgroundColor,
-                                      onTap: onPlayerBWatchTap,
-                                      onLongPressed: onPlayerBWatchLongPressed,
+                                      onTap: onPlayerBClockTap,
+                                      onLongPressed: onPlayerBClockLongPressed,
                                       forPlayerA: false,
                                     ),
                                   ),
@@ -300,7 +302,7 @@ class IconButtonsRow extends StatelessWidget {
             IconButton(
               onPressed: onPlayPause,
               icon: isPlaying ? Icon(Icons.pause_circle_filled) : Icon(Icons.play_circle_filled),
-              tooltip: isPlaying ? "Pause all clocks" : "Start all clocks",
+              tooltip: isPlaying ? "Pause last used clocks" : "Start last used clocks",
             ),
             IconButton(
               onPressed: onCoin,

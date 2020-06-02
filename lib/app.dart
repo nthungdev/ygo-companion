@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ygo_companion/states/calculator_setting_state.dart';
 import 'package:ygo_companion/states/theme_state.dart';
-import 'package:ygo_companion/states/watch_state.dart';
+import 'package:ygo_companion/states/clock_state.dart';
 import 'package:ygo_companion/routes.dart';
 import 'package:ygo_companion/utils/companion_theme.dart';
 
@@ -66,7 +66,7 @@ class _CompanionAppState extends State<CompanionApp> {
             builder: (__, widget) {
               return MultiProvider(
                 providers: [
-                  ChangeNotifierProvider(create: (___) => WatchState()),
+                  ChangeNotifierProvider(create: (___) => ClockState()),
                   ChangeNotifierProvider(create: (___) => _calculatorSettingState),
                 ],
                 child: widget,
