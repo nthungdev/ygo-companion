@@ -63,7 +63,7 @@ class CalculatorState extends ChangeNotifier {
 
         try {
           final calculation = formatExpression(selectedPlayer.calculation);
-          // print('calculation $calculation');
+          print('calculation $calculation');
           Expression exp = p.parse(selectedPlayer.logs.last + calculation);
           final int evaluated = exp.evaluate(EvaluationType.REAL, ContextModel()).toInt();
           // print("evaluated $evaluated");

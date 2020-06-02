@@ -12,6 +12,8 @@ String durationToDigital(Duration duration) {
 String formatExpression(String expression) {
   const operators = "+-*/÷x";
   const numeric = "0123456789";
+  const specials = "()";
+  // Symbols
   List<String> l = [];
   if (!operators.contains(expression[0])) {
     return null;
@@ -35,6 +37,8 @@ String formatExpression(String expression) {
         l.add("/");
       else
         l.add(c);
+    } else if (specials.contains(c)) {
+      l.add(c);
     }
   }
 
