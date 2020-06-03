@@ -45,3 +45,4 @@ app.*.map.json
 android/key.properties
 node_modules
 upload_certificate.pem
+keystore.jks
