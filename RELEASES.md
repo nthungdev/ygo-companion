@@ -1,10 +1,10 @@
 # v0.1.1
 
-## Bug Fixes
+### Bug Fixes
 
 - Minuses inside parentheses not handled correctly.
 
-## Improvements
+### Improvements
 
 - Theme mode UX in Setting Page.
 - Change "Use system mode" from a checkbox to a switch button.
