@@ -9,7 +9,8 @@ String durationToDigital(Duration duration) {
 }
 
 /// Clean up unnecessary stuff in the expression
-String formatExpression(String expression) {
+/// Returns null if invalid
+String? formatExpression(String expression) {
   const operators = "+-*/÷x";
   const numeric = "0123456789";
   const specials = "()";
@@ -31,12 +32,13 @@ String formatExpression(String expression) {
         l.add(c);
       }
     } else if (operators.contains(c)) {
-      if (c == "x")
+      if (c == "x") {
         l.add("*");
-      else if (c == "÷")
+      } else if (c == "÷") {
         l.add("/");
-      else
+      } else {
         l.add(c);
+      }
     } else if (specials.contains(c)) {
       l.add(c);
     }
@@ -57,8 +59,9 @@ String formatExpression(String expression) {
         l[i + 1] = "+";
       } else if (item == "-" && l[i + 1] == "+") {
         l[i + 1] = "-";
-      } else
+      } else {
         formatted.add(item);
+      }
     } else {
       formatted.add(item);
     }

@@ -5,13 +5,11 @@ import 'package:ygo_companion/states/theme_state.dart';
 import 'package:ygo_companion/widgets/icons/dice_icons.dart';
 
 class DiceResult extends StatefulWidget {
-  DiceResult({
-    Key key,
-    this.value,
-    this.onClose,
-  }) : super(key: key);
+  const DiceResult({
+    super.key,
+    required this.onClose,
+  });
 
-  final int value;
   final VoidCallback onClose;
 
   @override
@@ -30,7 +28,9 @@ class _DiceResultState extends State<DiceResult> {
         child: Center(
           child: Container(
             decoration: BoxDecoration(
-              color: ThemeState.of(context).isDarkMode ? Colors.grey : Colors.white,
+              color: ThemeState.of(context).isDarkMode
+                  ? Colors.grey
+                  : Colors.white,
               borderRadius: BorderRadius.circular(5),
             ),
             padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -45,7 +45,9 @@ class _DiceResultState extends State<DiceResult> {
                             ? DiceIcons.dice3
                             : diceResult == 4
                                 ? DiceIcons.dice4
-                                : diceResult == 5 ? DiceIcons.dice5 : DiceIcons.dice6;
+                                : diceResult == 5
+                                    ? DiceIcons.dice5
+                                    : DiceIcons.dice6;
 
                 return Column(
                   mainAxisSize: MainAxisSize.min,
@@ -57,7 +59,8 @@ class _DiceResultState extends State<DiceResult> {
                         Container(
                           color: Colors.white,
                           width: MediaQuery.of(context).size.shortestSide * 0.3,
-                          height: MediaQuery.of(context).size.shortestSide * 0.3,
+                          height:
+                              MediaQuery.of(context).size.shortestSide * 0.3,
                         ),
                         Icon(
                           icon,

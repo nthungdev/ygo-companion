@@ -2,21 +2,19 @@ import 'package:flutter/material.dart';
 
 class PlayerLP extends StatelessWidget {
   final int lp;
-  final String calculation;
-  final VoidCallback onPressed;
-  final VoidCallback onLongPress;
-  final String label;
+  final VoidCallback? onPressed;
+  final VoidCallback? onLongPress;
+  final String? label;
   final bool selected;
 
   const PlayerLP({
-    Key key,
+    super.key,
     this.lp = 8000,
     this.label,
-    this.calculation,
     this.onPressed,
     this.onLongPress,
     this.selected = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +28,8 @@ class PlayerLP extends StatelessWidget {
         splashColor: Colors.white,
         child: Container(
           color: selected
-              ? Theme.of(context).accentColor.withAlpha(200)
-              : Theme.of(context).backgroundColor.withAlpha(200),
+              ? Theme.of(context).colorScheme.secondary.withAlpha(200)
+              : Theme.of(context).colorScheme.background.withAlpha(200),
           child: LayoutBuilder(
             builder: (context, constraint) {
               return Stack(
@@ -42,11 +40,15 @@ class PlayerLP extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 2),
                         child: Text(
-                          label,
+                          label!,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                            color: Theme.of(context).textTheme.bodyText2.color.withAlpha(125),
+                            color: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.color
+                                ?.withAlpha(125),
                           ),
                         ),
                       ),

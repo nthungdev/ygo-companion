@@ -3,18 +3,18 @@ import 'package:ygo_companion/models/player.dart';
 import 'package:ygo_companion/screens/calculator/widgets/calculator_pad_5.dart';
 
 class TestLayout extends StatelessWidget {
-  final Stopwatch mainWatch;
-  final Stopwatch watchA;
-  final Stopwatch watchB;
-  final Duration mainWatchDuration;
-  final Function onMainWatchTap;
-  final Player playerA;
-  final Player playerB;
-  final Function(String) onInputTap;
-  final Function(bool forPlayerA) onPlayerSelected;
+  final Stopwatch? mainWatch;
+  final Stopwatch? watchA;
+  final Stopwatch? watchB;
+  final Duration? mainWatchDuration;
+  final Function? onMainWatchTap;
+  final Player? playerA;
+  final Player? playerB;
+  final Function(String)? onInputTap;
+  final Function(bool forPlayerA)? onPlayerSelected;
 
   const TestLayout({
-    Key key,
+    super.key,
     this.mainWatch,
     this.playerA,
     this.playerB,
@@ -24,7 +24,7 @@ class TestLayout extends StatelessWidget {
     this.onInputTap,
     this.onPlayerSelected,
     this.onMainWatchTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -56,8 +56,8 @@ class TestLayout extends StatelessWidget {
     );
   }
 
-  Container _buildCal(double calHeight) {
-    return Container(
+  Widget _buildCal(double calHeight) {
+    return SizedBox(
       width: calHeight / 4 * 5 + 5,
       child: Column(
         children: <Widget>[
@@ -65,9 +65,9 @@ class TestLayout extends StatelessWidget {
             child: Container(
               width: calHeight / 4 * 5 + 5,
               color: Colors.white,
-              padding: EdgeInsets.all(8),
-              margin: EdgeInsets.only(bottom: 5),
-              child: Row(
+              padding: const EdgeInsets.all(8),
+              margin: const EdgeInsets.only(bottom: 5),
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   Text(
@@ -78,7 +78,7 @@ class TestLayout extends StatelessWidget {
               ),
             ),
           ),
-          Container(
+          SizedBox(
             height: calHeight,
             child: CalculatorPad(
               onKeyPress: (key) {},

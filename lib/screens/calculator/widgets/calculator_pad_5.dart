@@ -1,23 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:ygo_companion/utils/companion_theme.dart';
 
 class CalculatorPad extends StatelessWidget {
   final double space;
-  final double height;
-  final Function(String key) onKeyPress;
-  final Color color;
+  final double? height;
+  final Function(String key)? onKeyPress;
 
   const CalculatorPad({
-    Key key,
+    super.key,
     this.space = 5,
     this.height,
-    this.color,
     this.onKeyPress,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
-    final keyStyle = const TextStyle(
+    const keyStyle = TextStyle(
       fontSize: 30,
       fontWeight: FontWeight.w400,
     );
@@ -30,17 +27,22 @@ class CalculatorPad extends StatelessWidget {
           AspectRatio(
             aspectRatio: 3 / 4,
             child: Container(
-              color: Theme.of(context).backgroundColor.withAlpha(200),
+              color: Theme.of(context).colorScheme.background.withAlpha(200),
               child: GridView.count(
                 padding: const EdgeInsets.all(0),
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 crossAxisCount: 3,
                 children: "7,8,9,4,5,6,1,2,3,0,00,=".split(",").map((item) {
                   return LayoutBuilder(builder: (context, constraints) {
-                    return FlatButton(
-                      textTheme: ButtonTextTheme.normal,
-                      padding: EdgeInsets.all(0),
-                      onPressed: () => this.onKeyPress != null ? this.onKeyPress(item) : null,
+                    return TextButton(
+                      // TODO ButtonTextTheme.normal?
+                      // style: ButtonStyle(
+                      //   // textTheme: ButtonTextTheme.normal,
+                      // ),
+                      style: TextButton.styleFrom(
+                        padding: const EdgeInsets.all(0),
+                      ),
+                      onPressed: () => onKeyPress!(item),
                       child: Text(
                         item.toString(),
                         style: keyStyle.copyWith(
@@ -53,28 +55,34 @@ class CalculatorPad extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(width: this.space),
+          SizedBox(width: space),
           AspectRatio(
             aspectRatio: 2 / 4,
             child: Container(
-              color: Theme.of(context).backgroundColor.withAlpha(200),
+              color: Theme.of(context).colorScheme.background.withAlpha(200),
               child: GridView.count(
                 padding: const EdgeInsets.all(0),
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 crossAxisCount: 2,
                 children: [
-                  FlatButton(
-                    textTheme: ButtonTextTheme.normal,
-                    padding: const EdgeInsets.all(0),
-                    onPressed: () => this.onKeyPress != null ? this.onKeyPress("x") : null,
-                    child: Icon(Icons.backspace),
+                  TextButton(
+                    // TODO
+                    // textTheme: ButtonTextTheme.normal,
+                    style: TextButton.styleFrom(
+                      padding: const EdgeInsets.all(0),
+                    ),
+                    onPressed: () => onKeyPress!("x"),
+                    child: const Icon(Icons.backspace),
                   ),
                   ..."C,(,),+,x2,-,÷2".split(",").map((item) {
                     return LayoutBuilder(builder: (contex, constraints) {
-                      return FlatButton(
-                        textTheme: ButtonTextTheme.normal,
-                        padding: const EdgeInsets.all(0),
-                        onPressed: () => this.onKeyPress != null ? this.onKeyPress(item) : null,
+                      return TextButton(
+                        // TODO
+                        // textTheme: ButtonTextTheme.normal,
+                        style: TextButton.styleFrom(
+                          padding: const EdgeInsets.all(0),
+                        ),
+                        onPressed: () => onKeyPress!(item),
                         child: Text(
                           item.toString(),
                           style: keyStyle.copyWith(

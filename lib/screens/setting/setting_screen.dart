@@ -1,5 +1,5 @@
-import 'package:device_id/device_id.dart';
-import 'package:firebase_admob/firebase_admob.dart';
+// import 'package:device_id/device_id.dart';
+// import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -9,16 +9,21 @@ import 'package:ygo_companion/widgets/theme_switcher.dart';
 const String testDevice = 'YOUR_DEVICE_ID';
 
 class SettingScreen extends StatefulWidget {
-  const SettingScreen({Key key}) : super(key: key);
+  const SettingScreen({super.key});
 
   @override
-  _SettingScreenState createState() => _SettingScreenState();
+  State<SettingScreen> createState() => _SettingScreenState();
 }
 
 class _SettingScreenState extends State<SettingScreen> {
-  BannerAd _bannerAd;
-  InterstitialAd _interstitialAd;
-  String _deviceId;
+  // BannerAd _bannerAd;
+  // InterstitialAd _interstitialAd;
+  // String _deviceId;
+  // final MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
+  //   childDirected: false,
+  //   nonPersonalizedAds: true,
+  // );
+  bool _canPop = false;
 
   @override
   void initState() {
@@ -28,30 +33,25 @@ class _SettingScreenState extends State<SettingScreen> {
 
   @override
   void dispose() {
-    _bannerAd?.dispose();
-    _interstitialAd?.dispose();
+    // _bannerAd?.dispose();
+    // _interstitialAd?.dispose();
     super.dispose();
   }
 
-  final MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
-    childDirected: false,
-    nonPersonalizedAds: true,
-  );
-
   Future<void> init() async {
-    _bannerAd = createBannerAd()
-      ..load()
-      ..show();
+    // _bannerAd = createBannerAd()
+    //   ..load()
+    //   ..show();
 
-    _interstitialAd = createInterstitialAd()..load();
-    _deviceId = await DeviceId.getID;
-    print('device id $_deviceId');
+    // _interstitialAd = createInterstitialAd()..load();
+    // _deviceId = await DeviceId.getID;
+    // print('device id $_deviceId');
   }
 
   _launchURL() async {
-    const url = 'https://www.facebook.com/ygoyutopia';
-    if (await canLaunch(url)) {
-      await launch(url);
+    final url = Uri.https('https://www.facebook.com/ygoyutopia');
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
     } else {
       throw 'Could not launch $url';
     }
@@ -68,45 +68,55 @@ class _SettingScreenState extends State<SettingScreen> {
       return 90;
   }
 
-  BannerAd createBannerAd() {
-    return BannerAd(
-      adUnitId: kDebugMode ? BannerAd.testAdUnitId : 'ca-app-pub-2953470737526040/3191146376',
-      size: AdSize.smartBanner,
-      targetingInfo: targetingInfo,
-      listener: (MobileAdEvent event) {
-        print("BannerAd event $event");
-      },
-    );
-  }
+  // BannerAd createBannerAd() {
+  //   return BannerAd(
+  //     adUnitId: kDebugMode
+  //         ? BannerAd.testAdUnitId
+  //         : 'ca-app-pub-2953470737526040/3191146376',
+  //     size: AdSize.smartBanner,
+  //     targetingInfo: targetingInfo,
+  //     listener: (MobileAdEvent event) {
+  //       print("BannerAd event $event");
+  //     },
+  //   );
+  // }
 
-  InterstitialAd createInterstitialAd() {
-    return InterstitialAd(
-      adUnitId: kDebugMode ? InterstitialAd.testAdUnitId : "ca-app-pub-2953470737526040/7597295246",
-      targetingInfo: targetingInfo,
-      listener: (MobileAdEvent event) {
-        print("InterstitialAd event $event");
-      },
-    );
-  }
+  // InterstitialAd createInterstitialAd() {
+  //   return InterstitialAd(
+  //     adUnitId: kDebugMode
+  //         ? InterstitialAd.testAdUnitId
+  //         : "ca-app-pub-2953470737526040/7597295246",
+  //     targetingInfo: targetingInfo,
+  //     listener: (MobileAdEvent event) {
+  //       print("InterstitialAd event $event");
+  //     },
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
-    print("Setting Screen build... ${AdSize.largeBanner}");
+    // print("Setting Screen build... ${AdSize.largeBanner}");
 
-    return WillPopScope(
-      onWillPop: () async {
-        final result = await _interstitialAd?.show();
-        print('_interstitialAd result $result');
-        return true;
+    return PopScope(
+      canPop: _canPop,
+      onPopInvoked: (didPop) async {
+        print("didPop $didPop");
+        print("_canPop $_canPop");
+        // final result = await _interstitialAd?.show();
+        // print('_interstitialAd result $result');
+        _canPop = true;
+        if (!didPop) {
+          Navigator.of(context).pop();
+        }
       },
       child: Scaffold(
-        appBar: AppBar(title: Text("Setting")),
+        appBar: AppBar(title: const Text("Setting")),
         body: Column(
           children: <Widget>[
             Expanded(
               child: ListView(
-                padding: EdgeInsets.all(5),
-                children: <Widget>[
+                padding: const EdgeInsets.all(5),
+                children: const <Widget>[
                   if (kDebugMode) ...[
                     CalculatorTypeListTile(),
                     Divider(thickness: 1),
@@ -118,9 +128,11 @@ class _SettingScreenState extends State<SettingScreen> {
             ),
             Column(
               children: <Widget>[
-                Text("Partner with"),
-                FlatButton(
-                  padding: EdgeInsets.all(5),
+                const Text("Partner with"),
+                TextButton(
+                  style: TextButton.styleFrom(
+                    padding: const EdgeInsets.all(5),
+                  ),
                   onPressed: _launchURL,
                   child: Image.asset(
                     "assets/logo/yutopia_logo.png",

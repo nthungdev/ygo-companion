@@ -7,12 +7,12 @@ class ClockState extends ChangeNotifier {
     return Provider.of<ClockState>(context, listen: listen);
   }
 
-  static const Duration _tickFrequency = const Duration(milliseconds: 200);
+  static const Duration _tickFrequency = Duration(milliseconds: 200);
 
-  Timer _timer;
-  Stopwatch _watch;
-  Stopwatch _watchA;
-  Stopwatch _watchB;
+  Timer? _timer;
+  final Stopwatch _watch = Stopwatch();
+  final Stopwatch _watchA = Stopwatch();
+  final Stopwatch _watchB = Stopwatch();
 
   Duration get currentDuration => _watch.elapsed;
   Duration get currentDurationA => _watchA.elapsed;
@@ -22,11 +22,7 @@ class ClockState extends ChangeNotifier {
   bool get isRunningA => _watchA.isRunning;
   bool get isRunningB => _watchB.isRunning;
 
-  ClockState() {
-    _watch = Stopwatch();
-    _watchA = Stopwatch();
-    _watchB = Stopwatch();
-  }
+  ClockState();
 
   @override
   void dispose() {
@@ -49,9 +45,7 @@ class ClockState extends ChangeNotifier {
     bool clockB = false,
   }) {
     if (main || clockA || clockB) {
-      if (_timer == null) {
-        _timer = Timer.periodic(_tickFrequency, _onTick);
-      }
+      _timer ??= Timer.periodic(_tickFrequency, _onTick);
 
       if (main) _watch.start();
       if (clockA) _watchA.start();

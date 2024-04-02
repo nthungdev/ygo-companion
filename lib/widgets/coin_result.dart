@@ -4,17 +4,15 @@ import 'package:ygo_companion/states/coin_state.dart';
 import 'package:ygo_companion/states/theme_state.dart';
 
 class CoinResult extends StatefulWidget {
-  CoinResult({
-    Key key,
-    this.value,
-    this.onClose,
-  }) : super(key: key);
+  const CoinResult({
+    super.key,
+    required this.onClose,
+  });
 
-  final int value;
   final VoidCallback onClose;
 
   @override
-  _CoinResultState createState() => _CoinResultState();
+  State<CoinResult> createState() => _CoinResultState();
 }
 
 class _CoinResultState extends State<CoinResult> {
@@ -31,7 +29,9 @@ class _CoinResultState extends State<CoinResult> {
             width: MediaQuery.of(context).size.shortestSide * 0.5,
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: ThemeState.of(context).isDarkMode ? Colors.grey : Colors.white,
+              color: ThemeState.of(context).isDarkMode
+                  ? Colors.grey
+                  : Colors.white,
               borderRadius: BorderRadius.circular(5),
             ),
             child: Selector<CoinState, bool>(
@@ -41,7 +41,8 @@ class _CoinResultState extends State<CoinResult> {
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     Padding(
-                      padding: EdgeInsets.all(MediaQuery.of(context).size.shortestSide * 0.02),
+                      padding: EdgeInsets.all(
+                          MediaQuery.of(context).size.shortestSide * 0.02),
                       child: Image.asset(
                         coinResult
                             ? "assets/images/calculator/coin_head.png"

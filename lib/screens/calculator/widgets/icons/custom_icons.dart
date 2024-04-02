@@ -21,10 +21,10 @@ class CustomIcons {
   static const _kFontFam = 'CustomIcons';
   static const _kFontPkg = null;
 
-  static const IconData coinCircle =
-      IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData coinStar =
-      IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData coin_circle =
+      const IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData coin_star =
+      const IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData dice =
-      IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+      const IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

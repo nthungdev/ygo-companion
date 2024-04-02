@@ -9,7 +9,7 @@ class CoinState extends ChangeNotifier {
   }
 
   final _randomizer = Random();
-  bool _coinResult;
+  bool? _coinResult;
 
   bool get coinResult => _coinResult ?? true;
 
@@ -19,8 +19,8 @@ class CoinState extends ChangeNotifier {
     _coinResult = _randomizer.nextBool();
 
     for (int roll = 0; roll < 10; roll++) {
-      await Future.delayed(Duration(milliseconds: 100));
-      _coinResult = !_coinResult;
+      await Future.delayed(const Duration(milliseconds: 100));
+      _coinResult = !_coinResult!;
       notifyListeners();
     }
   }

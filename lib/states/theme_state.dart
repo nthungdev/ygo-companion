@@ -1,14 +1,13 @@
 import 'dart:core';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// Perform calculator logic and control the state of Calculator Screen
 class ThemeState with ChangeNotifier {
-  static BuildContext _context;
+  static late BuildContext _context;
 
-  static ThemeState of(BuildContext context, {bool listen: true}) {
+  static ThemeState of(BuildContext context, {bool listen = true}) {
     _context = context;
     return Provider.of<ThemeState>(context, listen: listen);
   }
@@ -20,18 +19,13 @@ class ThemeState with ChangeNotifier {
 
   ThemeMode get mode => _mode;
 
-  ThemeState([SharedPreferences prefs]) {
-    _prefs = prefs;
-  }
-
-  Future<void> init() async {
-    if (_prefs == null) {
-      _prefs = await SharedPreferences.getInstance();
-    }
-
-    // Get CalculatorLayout
+  ThemeState(this._prefs) {
     final isDark = _prefs.getBool("darkTheme");
-    _mode = isDark == null ? ThemeMode.system : isDark ? ThemeMode.dark : ThemeMode.light;
+    _mode = isDark == null
+        ? ThemeMode.system
+        : isDark
+            ? ThemeMode.dark
+            : ThemeMode.light;
   }
 
   Future<void> switchMode(ThemeMode mode) async {
@@ -42,7 +36,7 @@ class ThemeState with ChangeNotifier {
 
     await _prefs.setBool(
       "darkTheme",
-      mode == ThemeMode.dark ? true : mode == ThemeMode.light ? false : null,
+      mode == ThemeMode.dark || mode == ThemeMode.light,
     );
   }
 }

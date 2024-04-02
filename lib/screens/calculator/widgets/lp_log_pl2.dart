@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class LpLogPL2 extends StatelessWidget {
   const LpLogPL2({
-    Key key,
-    @required this.boxColor,
-    @required this.calculations,
-  }) : super(key: key);
+    super.key,
+    required this.boxColor,
+    required this.calculations,
+  });
 
   final Color boxColor;
   final List calculations;
@@ -17,9 +17,7 @@ class LpLogPL2 extends StatelessWidget {
       child: ListView.builder(
         itemCount: calculations.length,
         itemBuilder: (_, index) {
-          return Container(
-            child: Text(calculations[index]),
-          );
+          return Text(calculations[index]);
         },
       ),
     );

@@ -9,8 +9,10 @@ import 'package:ygo_companion/states/dice_state.dart';
 import 'package:ygo_companion/states/clock_state.dart';
 
 class CalculatorScreen extends StatefulWidget {
+  const CalculatorScreen({super.key});
+
   @override
-  _CalculatorScreenState createState() => _CalculatorScreenState();
+  State<CalculatorScreen> createState() => _CalculatorScreenState();
 }
 
 class _CalculatorScreenState extends State<CalculatorScreen> {
@@ -19,10 +21,10 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
   bool _isPlaying = false;
   bool _isUsingDice = false;
   bool _isUsingCoin = false;
-  ClockState _staticClockState;
   bool _usingClockA = true;
   bool _usingClockB = false;
   bool _usingMainClock = true;
+  late ClockState _staticClockState;
 
   @override
   void initState() {
@@ -164,7 +166,9 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
     final calculatorState = CalculatorState.of(context);
     final calculatorSettingState = CalculatorSettingState.of(context);
 
-    final isPlaying = clockService.isRunning || clockService.isRunningA || clockService.isRunningB;
+    final isPlaying = clockService.isRunning ||
+        clockService.isRunningA ||
+        clockService.isRunningB;
 
     switch (calculatorSettingState.calculatorLayout) {
       case CalculatorLayout.HN_AV_1:

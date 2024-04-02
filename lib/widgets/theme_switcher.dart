@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:ygo_companion/states/theme_state.dart';
 import 'package:ygo_companion/utils/companion_theme.dart';
@@ -9,12 +8,12 @@ typedef void OnChangeCallback(bool isDark);
 ///
 /// Off: light mode
 class ThemeSwitchListTile extends StatelessWidget {
-  const ThemeSwitchListTile({
-    Key key,
-    this.onChange,
-  }) : super(key: key);
+  final OnChangeCallback? onChange;
 
-  final OnChangeCallback onChange;
+  const ThemeSwitchListTile({
+    super.key,
+    this.onChange,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,17 +22,13 @@ class ThemeSwitchListTile extends StatelessWidget {
 
     return SwitchListTile.adaptive(
       activeColor: CompanionTheme.primaryColor,
-      title: Text("Dark Mode"),
+      title: const Text("Dark Mode"),
       value: brightness == Brightness.light ? false : true,
       onChanged: themeState.mode == ThemeMode.system
           ? null
-          : (dark) {
-              if (dark) {
-                themeState.switchMode(ThemeMode.dark);
-              } else
-                themeState.switchMode(ThemeMode.light);
-
-              if (onChange != null) onChange(dark);
+          : (isDark) {
+              themeState.switchMode(isDark ? ThemeMode.dark : ThemeMode.light);
+              onChange!(isDark);
             },
     );
   }
@@ -41,11 +36,8 @@ class ThemeSwitchListTile extends StatelessWidget {
 
 class SystemThemeSwitchListTile extends StatelessWidget {
   const SystemThemeSwitchListTile({
-    Key key,
-    this.onChange,
-  }) : super(key: key);
-
-  final OnChangeCallback onChange;
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -53,15 +45,17 @@ class SystemThemeSwitchListTile extends StatelessWidget {
     final brightness = Theme.of(context).brightness;
 
     return SwitchListTile.adaptive(
-      title: Text("Auto Dark Mode"),
-      subtitle: Text("Follow OS setting"),
+      title: const Text("Auto Dark Mode"),
+      subtitle: const Text("Follow OS setting"),
       value: themeState.mode == ThemeMode.system ? true : false,
       activeColor: CompanionTheme.primaryColor,
       onChanged: (usingSystem) {
         themeState.switchMode(
           usingSystem
               ? ThemeMode.system
-              : brightness == Brightness.light ? ThemeMode.light : ThemeMode.dark,
+              : brightness == Brightness.light
+                  ? ThemeMode.light
+                  : ThemeMode.dark,
         );
       },
     );
