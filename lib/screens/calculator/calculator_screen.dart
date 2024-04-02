@@ -51,6 +51,11 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
       DeviceOrientation.landscapeRight,
       DeviceOrientation.landscapeLeft,
     ]);
+    // hack to fix overflow on the 1st frame of building IconButtonsRow
+    // while changing the orientation
+    // easier to reproduce on iOS
+    // to debug, maybe, log the constraints from LayoutBuilder in pro_layout_5
+    await Future.delayed(Duration(milliseconds: 250));
     // SystemChrome.setEnabledSystemUIOverlays([]);
     setState(() {
       _orientationReady = true;

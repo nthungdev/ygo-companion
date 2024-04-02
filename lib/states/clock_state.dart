@@ -35,7 +35,7 @@ class ClockState extends ChangeNotifier {
   }
 
   void _onTick(Timer timer) {
-    print("tick ${timer.tick}");
+    // print("tick ${timer.tick}");
     notifyListeners();
   }
 

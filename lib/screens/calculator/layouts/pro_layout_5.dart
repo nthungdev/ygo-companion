@@ -205,9 +205,8 @@ class ProLayout5 extends StatelessWidget {
                           ),
                           Expanded(
                             child: LayoutBuilder(
-                                builder: (context, bottomConstraint) {
-                              final bottomRowHeight =
-                                  bottomConstraint.maxHeight;
+                                builder: (context, boxConstraint) {
+                              final bottomRowHeight = boxConstraint.maxHeight;
                               final calculatorPadHeight =
                                   bottomRowHeight - iconBoxHeight - space * 3;
                               final iconBoxWidth =
@@ -227,7 +226,7 @@ class ProLayout5 extends StatelessWidget {
                                   ),
                                   _buildButtonsAndCalculator(
                                     iconBoxWidth: iconBoxWidth,
-                                    height: bottomConstraint.maxHeight * 0.2,
+                                    height: boxConstraint.maxHeight * 0.2,
                                   ),
                                   Expanded(
                                     child: Padding(
