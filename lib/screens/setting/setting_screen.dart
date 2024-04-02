@@ -1,7 +1,7 @@
 // import 'package:device_id/device_id.dart';
-// import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+// import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:ygo_companion/widgets/calculator_type_list_tile.dart';
@@ -17,7 +17,7 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
-  // BannerAd _bannerAd;
+  // BannerAd? _bannerAd;
   // InterstitialAd _interstitialAd;
   // String _deviceId;
   // final MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
@@ -71,6 +71,7 @@ class _SettingScreenState extends State<SettingScreen> {
 
   // BannerAd createBannerAd() {
   //   return BannerAd(
+  //     request: const AdRequest(),
   //     adUnitId: kDebugMode
   //         ? BannerAd.testAdUnitId
   //         : 'ca-app-pub-2953470737526040/3191146376',
