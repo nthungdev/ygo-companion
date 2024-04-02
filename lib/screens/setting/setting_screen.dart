@@ -101,8 +101,6 @@ class _SettingScreenState extends State<SettingScreen> {
     return PopScope(
       canPop: _canPop,
       onPopInvoked: (didPop) async {
-        print("didPop $didPop");
-        print("_canPop $_canPop");
         // final result = await _interstitialAd?.show();
         // print('_interstitialAd result $result');
         _canPop = true;

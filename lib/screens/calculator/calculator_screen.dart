@@ -24,8 +24,8 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
   bool _usingClockA = true;
   bool _usingClockB = false;
   bool _usingMainClock = true;
-  late ClockState _staticClockState;
   bool _orientationReady = false;
+  late ClockState _staticClockState;
 
   @override
   void initState() {
