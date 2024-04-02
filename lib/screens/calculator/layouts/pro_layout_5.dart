@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:ygo_companion/models/player.dart';
 import 'package:ygo_companion/screens/calculator/widgets/calculator_pad_5.dart';
 import 'package:ygo_companion/screens/calculator/widgets/duel_log_5.dart';
+import 'package:ygo_companion/screens/calculator/widgets/icon_buttons_row_5.dart';
 import 'package:ygo_companion/screens/calculator/widgets/main_clock_5.dart';
 import 'package:ygo_companion/screens/calculator/widgets/player_lp_5.dart';
 import 'package:ygo_companion/screens/calculator/widgets/player_clock_5.dart';
 import 'package:ygo_companion/states/theme_state.dart';
 import 'package:ygo_companion/widgets/coin_result.dart';
 import 'package:ygo_companion/widgets/dice_result.dart';
-import 'package:ygo_companion/screens/calculator/widgets/icons/custom_icons.dart';
 
 class ProLayout5 extends StatelessWidget {
   final Duration mainClockDuration;
@@ -76,7 +76,7 @@ class ProLayout5 extends StatelessWidget {
   });
 
   static const double space = 5.0;
-  static const double viewAspectRatio = 16 / 9;
+  static const double layoutAspectRatio = 16 / 9;
   static const double iconBoxHeight = 50.0;
   static final boxBackgroundColor = Colors.white.withAlpha(200);
   static final selectedColor = Colors.amber.withAlpha(200);
@@ -131,7 +131,7 @@ class ProLayout5 extends StatelessWidget {
             SafeArea(
               child: Center(
                 child: AspectRatio(
-                  aspectRatio: viewAspectRatio,
+                  aspectRatio: layoutAspectRatio,
                   child: LayoutBuilder(
                     builder: (context, viewConstraint) {
                       final topRowHeight = viewConstraint.maxHeight / 5;
@@ -251,71 +251,6 @@ class ProLayout5 extends StatelessWidget {
             ),
             if (isUsingCoin) CoinResult(onClose: onCloseCoin),
             if (isUsingDice) DiceResult(onClose: onCloseDice),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class IconButtonsRow extends StatelessWidget {
-  const IconButtonsRow({
-    super.key,
-    required this.color,
-    required this.height,
-    required this.width,
-    this.onCoin,
-    this.onDice,
-    this.onReset,
-    this.onPlayPause,
-    this.isPlaying = false,
-  });
-
-  final double height;
-  final double width;
-  final Color color;
-  final VoidCallback? onCoin;
-  final VoidCallback? onDice;
-  final VoidCallback? onReset;
-  final VoidCallback? onPlayPause;
-  final bool isPlaying;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: height,
-      width: width,
-      color: Theme.of(context).colorScheme.background.withAlpha(200),
-      child: Material(
-        color: Colors.transparent,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            IconButton(
-              onPressed: onReset,
-              icon: const Icon(Icons.history),
-              tooltip: "Reset clocks",
-            ),
-            IconButton(
-              onPressed: onPlayPause,
-              icon: isPlaying
-                  ? const Icon(Icons.pause_circle_filled)
-                  : const Icon(Icons.play_circle_filled),
-              tooltip: isPlaying
-                  ? "Pause last used clocks"
-                  : "Start last used clocks",
-            ),
-            IconButton(
-              onPressed: onCoin,
-              icon: const Icon(CustomIcons.coin_circle),
-              tooltip: "Toss a coin",
-            ),
-            IconButton(
-              onPressed: onDice,
-              icon: const Icon(CustomIcons.dice),
-              tooltip: "Roll a dice",
-            ),
           ],
         ),
       ),
