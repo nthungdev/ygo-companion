@@ -25,15 +25,12 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
   bool _usingClockB = false;
   bool _usingMainClock = true;
   late ClockState _staticClockState;
+  bool _orientationReady = false;
 
   @override
   void initState() {
     super.initState();
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeRight,
-      DeviceOrientation.landscapeLeft,
-    ]);
-    // SystemChrome.setEnabledSystemUIOverlays([]);
+    init();
     _staticClockState = ClockState.of(context, listen: false);
   }
 
@@ -47,6 +44,17 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
     ]);
     _staticClockState.stopAll(notifyListeners: false);
     super.dispose();
+  }
+
+  Future<void> init() async {
+    await SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
+    ]);
+    // SystemChrome.setEnabledSystemUIOverlays([]);
+    setState(() {
+      _orientationReady = true;
+    });
   }
 
   void handleClockTap({
@@ -162,6 +170,10 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (!_orientationReady) {
+      return Container();
+    }
+
     final clockService = ClockState.of(context);
     final calculatorState = CalculatorState.of(context);
     final calculatorSettingState = CalculatorSettingState.of(context);
