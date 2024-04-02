@@ -8,17 +8,12 @@ class CalculatorSettingState extends ChangeNotifier {
   }
 
   final _kSPLayoutKey = "CalculatorLayout";
-  CalculatorLayout? _layout;
+  late CalculatorLayout _layout;
   SharedPreferences _prefs;
 
   CalculatorLayout? get calculatorLayout => _layout;
 
-  CalculatorSettingState(this._prefs);
-
-  // METHODS //
-
-  void init() {
-    // TODO consider make layout a constructor param and move this to the constructor caller
+  CalculatorSettingState(this._prefs) {
     // Get CalculatorLayout
     final spLayout = _prefs.getString(_kSPLayoutKey);
     _layout = CalculatorLayout.values.firstWhere(
@@ -26,6 +21,8 @@ class CalculatorSettingState extends ChangeNotifier {
       orElse: () => CalculatorLayout.HN_AV_1,
     );
   }
+
+  // METHODS //
 
   Future<void> changeLayout(CalculatorLayout layout) async {
     _layout = layout;
