@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:ygo_companion/states/theme_state.dart';
 import 'package:ygo_companion/utils/companion_theme.dart';
 
@@ -17,7 +18,7 @@ class ThemeSwitchListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeState = ThemeState.of(context, listen: false);
+    final themeState = ThemeState.of(context);
     final brightness = Theme.of(context).brightness;
 
     return SwitchListTile.adaptive(
@@ -28,7 +29,7 @@ class ThemeSwitchListTile extends StatelessWidget {
           ? null
           : (isDark) {
               themeState.switchMode(isDark ? ThemeMode.dark : ThemeMode.light);
-              onChange!(isDark);
+              onChange != null ? onChange!(isDark) : null;
             },
     );
   }
@@ -41,7 +42,7 @@ class SystemThemeSwitchListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeState = ThemeState.of(context, listen: false);
+    final themeState = ThemeState.of(context);
     final brightness = Theme.of(context).brightness;
 
     return SwitchListTile.adaptive(

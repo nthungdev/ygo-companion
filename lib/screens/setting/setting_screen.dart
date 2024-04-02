@@ -3,6 +3,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+
 import 'package:ygo_companion/widgets/calculator_type_list_tile.dart';
 import 'package:ygo_companion/widgets/theme_switcher.dart';
 
