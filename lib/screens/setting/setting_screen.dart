@@ -50,7 +50,7 @@ class _SettingScreenState extends State<SettingScreen> {
   }
 
   _launchURL() async {
-    final url = Uri.https('https://www.facebook.com/ygoyutopia');
+    final url = Uri.parse('https://www.facebook.com/ygoyutopia');
     if (await canLaunchUrl(url)) {
       await launchUrl(url);
     } else {
