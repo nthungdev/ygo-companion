@@ -29,13 +29,14 @@ class MainClock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraint) {
-      final textStyle = TextStyle(fontSize: constraint.maxWidth * 0.3);
+      final textStyle = TextStyle(fontSize: constraint.maxWidth * 0.25);
 
       return TextButton(
         onPressed: onTap,
         // TODO
-        // textTheme: ButtonTextTheme.normal,
+        // textTheme: ButtonTextTheme.normal
         style: TextButton.styleFrom(
+          textStyle: textStyle,
           padding: const EdgeInsets.only(),
         ),
         child: Container(
@@ -47,19 +48,13 @@ class MainClock extends StatelessWidget {
                 flex: 1,
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: Text(
-                    formattedMinutes,
-                    style: textStyle,
-                  ),
+                  child: Text(formattedMinutes),
                 ),
               ),
-              Text(":", style: textStyle),
+              Text(":"),
               Expanded(
                 flex: 1,
-                child: Text(
-                  formattedSeconds,
-                  style: textStyle,
-                ),
+                child: Text(formattedSeconds),
               ),
             ],
           ),
