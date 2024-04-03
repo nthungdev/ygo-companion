@@ -45,3 +45,5 @@ android/key.properties
 node_modules
 upload_certificate.pem
 keystore.jks
+
+.firebase
