@@ -81,36 +81,129 @@ class ProLayout5 extends StatelessWidget {
   static final boxBackgroundColor = Colors.white.withAlpha(200);
   static final selectedColor = Colors.amber.withAlpha(200);
 
-  Widget _buildButtonsAndCalculator({
-    required double iconBoxWidth,
-    required double height,
-  }) {
-    return Column(
-      children: <Widget>[
-        Container(
-          margin: const EdgeInsets.only(top: space),
-          child: IconButtonsRow(
-            height: iconBoxHeight,
-            width: iconBoxWidth,
-            color: boxBackgroundColor,
-            onCoin: onCoin,
-            onDice: onDice,
-            onReset: onReset,
-            isPlaying: isPlaying,
-            onPlayPause: onPlayPause,
-          ),
-        ),
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: space),
-            child: CalculatorPad(
-              onKeyPress: onInputTap,
-              // color: boxBackgroundColor,
-              space: space,
+  /// Top row contains (from left to right):
+  /// Player A LP
+  /// Player A clock
+  /// Main clock
+  /// Player B clock
+  /// Player B LP
+  Widget _buildTopRow({required double height}) {
+    return Container(
+      height: height,
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            flex: 1,
+            child: PlayerLP(
+              label: "Player A LP",
+              lp: playerA.lp,
+              // calculation: playerA.calculation,
+              onPressed: onPlayerATap,
+              onLongPress: onPlayerALongPress,
+              selected: playerASelected,
             ),
           ),
-        ),
-      ],
+          const SizedBox(width: space),
+          Expanded(
+            flex: 1,
+            child: PlayerClock(
+              label: "Player A Clock",
+              // clock: clockADuration,
+              // color: boxBackgroundColor,
+              onTap: onPlayerAClockTap,
+              onLongPressed: onPlayerAClockLongPressed,
+              forPlayerA: true,
+            ),
+          ),
+          const SizedBox(width: space),
+          Expanded(
+            flex: 2,
+            child: MainClock(
+              clock: mainClockDuration,
+              onTap: onMainClockTap,
+              // color: boxBackgroundColor,
+            ),
+          ),
+          const SizedBox(width: space),
+          Expanded(
+            flex: 1,
+            child: PlayerClock(
+              label: "Player B Clock",
+              // clock: clockBDuration,
+              // color: boxBackgroundColor,
+              onTap: onPlayerBClockTap,
+              onLongPressed: onPlayerBClockLongPressed,
+              forPlayerA: false,
+            ),
+          ),
+          const SizedBox(width: space),
+          Expanded(
+            flex: 1,
+            child: PlayerLP(
+              label: "Player B LP",
+              lp: playerB.lp,
+              selected: !playerASelected,
+              onLongPress: onPlayerBLongPress,
+              // calculation: playerB.calculation,
+              onPressed: onPlayerBTap,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildBottomRow() {
+    return Expanded(
+      child: LayoutBuilder(builder: (context, boxConstraint) {
+        final bottomRowHeight = boxConstraint.maxHeight;
+        final calculatorPadHeight = bottomRowHeight - iconBoxHeight - space;
+        final iconBoxWidth = (calculatorPadHeight / 4) * 5 + space;
+
+        return Row(
+          children: <Widget>[
+            // Player A Duel Log
+            Expanded(
+              child: DuelLog(
+                logs: playerA.logs,
+                calculation: playerA.calculation,
+                selected: playerASelected,
+              ),
+            ),
+            const SizedBox(width: space),
+            // Icon Buttons and Calculator Pad
+            Column(
+              children: <Widget>[
+                IconButtonsRow(
+                  height: iconBoxHeight,
+                  width: iconBoxWidth,
+                  isPlaying: isPlaying,
+                  onCoin: onCoin,
+                  onDice: onDice,
+                  onReset: onReset,
+                  onPlayPause: onPlayPause,
+                ),
+                const SizedBox(height: space),
+                Expanded(
+                  child: CalculatorPad(
+                    onKeyPress: onInputTap,
+                    space: space,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(width: space),
+            // Player B Duel Log
+            Expanded(
+              child: DuelLog(
+                logs: playerB.logs,
+                calculation: playerB.calculation,
+                selected: !playerASelected,
+              ),
+            ),
+          ],
+        );
+      }),
     );
   }
 
@@ -132,119 +225,21 @@ class ProLayout5 extends StatelessWidget {
               child: Center(
                 child: AspectRatio(
                   aspectRatio: layoutAspectRatio,
-                  child: LayoutBuilder(
-                    builder: (context, viewConstraint) {
-                      final topRowHeight = viewConstraint.maxHeight / 5;
+                  child: Container(
+                    padding: EdgeInsets.all(space),
+                    child: LayoutBuilder(
+                      builder: (context, boxConstraint) {
+                        final topRowHeight = boxConstraint.maxHeight / 5;
 
-                      return Column(
-                        children: <Widget>[
-                          Container(
-                            height: topRowHeight,
-                            margin: const EdgeInsets.only(
-                                top: space, left: space, right: space),
-                            child: Row(
-                              children: <Widget>[
-                                Expanded(
-                                  flex: 1,
-                                  child: PlayerLP(
-                                    label: "Player A LP",
-                                    lp: playerA.lp,
-                                    // calculation: playerA.calculation,
-                                    onPressed: onPlayerATap,
-                                    onLongPress: onPlayerALongPress,
-                                    selected: playerASelected,
-                                  ),
-                                ),
-                                const SizedBox(width: space),
-                                Expanded(
-                                  flex: 1,
-                                  child: PlayerClock(
-                                    label: "Player A Clock",
-                                    // clock: clockADuration,
-                                    // color: boxBackgroundColor,
-                                    onTap: onPlayerAClockTap,
-                                    onLongPressed: onPlayerAClockLongPressed,
-                                    forPlayerA: true,
-                                  ),
-                                ),
-                                const SizedBox(width: space),
-                                Expanded(
-                                  flex: 2,
-                                  child: MainClock(
-                                    clock: mainClockDuration,
-                                    onTap: onMainClockTap,
-                                    // color: boxBackgroundColor,
-                                  ),
-                                ),
-                                const SizedBox(width: space),
-                                Expanded(
-                                  flex: 1,
-                                  child: PlayerClock(
-                                    label: "Player B Clock",
-                                    // clock: clockBDuration,
-                                    // color: boxBackgroundColor,
-                                    onTap: onPlayerBClockTap,
-                                    onLongPressed: onPlayerBClockLongPressed,
-                                    forPlayerA: false,
-                                  ),
-                                ),
-                                const SizedBox(width: space),
-                                Expanded(
-                                  flex: 1,
-                                  child: PlayerLP(
-                                    label: "Player B LP",
-                                    lp: playerB.lp,
-                                    selected: !playerASelected,
-                                    onLongPress: onPlayerBLongPress,
-                                    // calculation: playerB.calculation,
-                                    onPressed: onPlayerBTap,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            child: LayoutBuilder(
-                                builder: (context, boxConstraint) {
-                              final bottomRowHeight = boxConstraint.maxHeight;
-                              final calculatorPadHeight =
-                                  bottomRowHeight - iconBoxHeight - space * 3;
-                              final iconBoxWidth =
-                                  (calculatorPadHeight / 4) * 5 + space;
-
-                              return Row(
-                                children: <Widget>[
-                                  Expanded(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(space),
-                                      child: DuelLog(
-                                        logs: playerA.logs,
-                                        calculation: playerA.calculation,
-                                        selected: playerASelected,
-                                      ),
-                                    ),
-                                  ),
-                                  _buildButtonsAndCalculator(
-                                    iconBoxWidth: iconBoxWidth,
-                                    height: boxConstraint.maxHeight * 0.2,
-                                  ),
-                                  Expanded(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(space),
-                                      child: DuelLog(
-                                        logs: playerB.logs,
-                                        calculation: playerB.calculation,
-                                        selected: !playerASelected,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              );
-                            }),
-                          )
-                        ],
-                      );
-                    },
+                        return Column(
+                          children: <Widget>[
+                            _buildTopRow(height: topRowHeight),
+                            const SizedBox(height: space),
+                            _buildBottomRow(),
+                          ],
+                        );
+                      },
+                    ),
                   ),
                 ),
               ),

@@ -5,7 +5,6 @@ import 'icons/custom_icons.dart';
 class IconButtonsRow extends StatelessWidget {
   const IconButtonsRow({
     super.key,
-    required this.color,
     required this.height,
     required this.width,
     this.onCoin,
@@ -17,7 +16,6 @@ class IconButtonsRow extends StatelessWidget {
 
   final double height;
   final double width;
-  final Color color;
   final VoidCallback? onCoin;
   final VoidCallback? onDice;
   final VoidCallback? onReset;
