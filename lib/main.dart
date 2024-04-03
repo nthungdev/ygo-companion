@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
@@ -12,9 +13,11 @@ import 'package:ygo_companion/states/theme_state.dart';
 import 'package:ygo_companion/utils/companion_theme.dart';
 
 void main() {
-  // Initialize the Mobile Ads SDK before loading ads
-  WidgetsFlutterBinding.ensureInitialized();
-  unawaited(MobileAds.instance.initialize());
+  if (!kIsWeb) {
+    // Initialize the Mobile Ads SDK before loading ads
+    WidgetsFlutterBinding.ensureInitialized();
+    unawaited(MobileAds.instance.initialize());
+  }
 
   runApp(const CompanionApp());
 }

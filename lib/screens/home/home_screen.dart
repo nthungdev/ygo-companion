@@ -49,6 +49,7 @@ class HomeScreen extends StatelessWidget {
                   onPressed: () => handleGoToCalculator(context),
                   child: const Text("CALCULATOR"),
                 ),
+                const SizedBox(height: 10),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     foregroundColor: ThemeState.of(context).isDarkMode
@@ -56,8 +57,6 @@ class HomeScreen extends StatelessWidget {
                         : Colors.grey[700],
                   ),
                   onPressed: () => handleGoToSetting(context),
-                  // TODO
-                  // textTheme: ButtonTextTheme.primary,
                   child: const Text("SETTINGS"),
                 ),
               ],

@@ -69,7 +69,7 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
   fonts:
-    - family: Customicons
+    - family: CustomIcons
       fonts:
         - asset: assets/fonts/CustomIcons.ttf
     - family: DiceIcons
