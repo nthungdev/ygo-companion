@@ -58,16 +58,16 @@ class _SettingScreenState extends State<SettingScreen> {
     }
   }
 
-  double _getSmartBannerHeight() {
-    final deviceHeight = MediaQuery.of(context).size.height;
+  // double _getSmartBannerHeight() {
+  //   final deviceHeight = MediaQuery.of(context).size.height;
 
-    if (deviceHeight <= 400) {
-      return 32;
-    } else if (deviceHeight > 400 && deviceHeight <= 720) {
-      return 55;
-    } else
-      return 90;
-  }
+  //   if (deviceHeight <= 400) {
+  //     return 32;
+  //   } else if (deviceHeight > 400 && deviceHeight <= 720) {
+  //     return 55;
+  //   } else
+  //     return 90;
+  // }
 
   // BannerAd createBannerAd() {
   //   return BannerAd(
@@ -128,10 +128,10 @@ class _SettingScreenState extends State<SettingScreen> {
             ),
             Column(
               children: <Widget>[
-                const Text("Partner with"),
+                const Text("Partnered with"),
                 TextButton(
                   style: TextButton.styleFrom(
-                    padding: const EdgeInsets.all(5),
+                    padding: const EdgeInsets.all(10),
                   ),
                   onPressed: _launchURL,
                   child: Image.asset(
@@ -140,7 +140,7 @@ class _SettingScreenState extends State<SettingScreen> {
                     width: MediaQuery.of(context).size.shortestSide * 0.5,
                   ),
                 ),
-                SizedBox(height: _getSmartBannerHeight()),
+                // SizedBox(height: _getSmartBannerHeight()),
               ],
             )
           ],
