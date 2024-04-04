@@ -1,9 +1,12 @@
 // import 'package:device_id/device_id.dart';
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-// import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'package:ygo_companion/widgets/app_banner_ad.dart';
 import 'package:ygo_companion/widgets/calculator_type_list_tile.dart';
 import 'package:ygo_companion/widgets/theme_switcher.dart';
 
@@ -17,13 +20,10 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
-  // BannerAd? _bannerAd;
-  // InterstitialAd _interstitialAd;
+  BannerAd? _bannerAd;
+  AdSize? _bannerAdSize;
+  InterstitialAd? _interstitialAd;
   // String _deviceId;
-  // final MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
-  //   childDirected: false,
-  //   nonPersonalizedAds: true,
-  // );
   bool _canPop = false;
 
   @override
@@ -34,19 +34,19 @@ class _SettingScreenState extends State<SettingScreen> {
 
   @override
   void dispose() {
-    // _bannerAd?.dispose();
-    // _interstitialAd?.dispose();
+    _bannerAd?.dispose();
+    // _interstitialAd is disposed in FullScreenContentCallback
     super.dispose();
   }
 
-  Future<void> init() async {
-    // _bannerAd = createBannerAd()
-    //   ..load()
-    //   ..show();
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _getBannerAdSize();
+  }
 
-    // _interstitialAd = createInterstitialAd()..load();
-    // _deviceId = await DeviceId.getID;
-    // print('device id $_deviceId');
+  Future<void> init() async {
+    _loadInterstitialAd();
   }
 
   _launchURL() async {
@@ -58,53 +58,87 @@ class _SettingScreenState extends State<SettingScreen> {
     }
   }
 
-  // double _getSmartBannerHeight() {
-  //   final deviceHeight = MediaQuery.of(context).size.height;
+  Future<void> _getBannerAdSize() async {
+    final adSize =
+        await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(
+            MediaQuery.sizeOf(context).width.truncate());
 
-  //   if (deviceHeight <= 400) {
-  //     return 32;
-  //   } else if (deviceHeight > 400 && deviceHeight <= 720) {
-  //     return 55;
-  //   } else
-  //     return 90;
-  // }
+    if (adSize == null) {
+      debugPrint("Cannot get banner ad size");
+      return;
+    }
 
-  // BannerAd createBannerAd() {
-  //   return BannerAd(
-  //     request: const AdRequest(),
-  //     adUnitId: kDebugMode
-  //         ? BannerAd.testAdUnitId
-  //         : 'ca-app-pub-2953470737526040/3191146376',
-  //     size: AdSize.smartBanner,
-  //     targetingInfo: targetingInfo,
-  //     listener: (MobileAdEvent event) {
-  //       print("BannerAd event $event");
-  //     },
-  //   );
-  // }
+    if (_bannerAdSize?.height != adSize.height ||
+        _bannerAdSize?.width != adSize.width) {
+      setState(() => _bannerAdSize = adSize);
+    }
+  }
 
-  // InterstitialAd createInterstitialAd() {
-  //   return InterstitialAd(
-  //     adUnitId: kDebugMode
-  //         ? InterstitialAd.testAdUnitId
-  //         : "ca-app-pub-2953470737526040/7597295246",
-  //     targetingInfo: targetingInfo,
-  //     listener: (MobileAdEvent event) {
-  //       print("InterstitialAd event $event");
-  //     },
-  //   );
-  // }
+  /// Loads interstitial ad
+  void _loadInterstitialAd() {
+    if (!Platform.isAndroid && !Platform.isIOS) {
+      debugPrint("Not show Ad because platform is neither Android or iOS");
+      return;
+    }
+
+    String adUnitId = kDebugMode
+        ? Platform.isAndroid
+            ? 'ca-app-pub-3940256099942544/1033173712' // Test id on Android
+            : 'ca-app-pub-3940256099942544/4411468910' // Test id on iOS
+        : Platform.isAndroid
+            // TODO replace with real unit ids
+            ? 'ca-app-pub-3940256099942544/1033173712'
+            : 'ca-app-pub-3940256099942544/4411468910';
+
+    InterstitialAd.load(
+        adUnitId: adUnitId,
+        request: const AdRequest(),
+        adLoadCallback: InterstitialAdLoadCallback(
+          // Called when an ad is successfully received.
+          onAdLoaded: (ad) {
+            ad.fullScreenContentCallback = FullScreenContentCallback(
+                // Called when the ad showed the full screen content.
+                onAdShowedFullScreenContent: (ad) {
+                  setState(() => _canPop = true);
+                },
+                // Called when an impression occurs on the ad.
+                onAdImpression: (ad) {},
+                // Called when the ad failed to show full screen content.
+                onAdFailedToShowFullScreenContent: (ad, err) {
+                  ad.dispose();
+                  _interstitialAd = null;
+                  Navigator.of(context).pop();
+                },
+                // Called when the ad dismissed full screen content.
+                onAdDismissedFullScreenContent: (ad) {
+                  ad.dispose();
+                  _interstitialAd = null;
+                  Navigator.of(context).pop();
+                },
+                // Called when a click is recorded for an ad.
+                onAdClicked: (ad) {});
+
+            debugPrint('$ad loaded.');
+            // Keep a reference to the ad so you can show it later.
+            _interstitialAd = ad;
+          },
+          // Called when an ad request failed.
+          onAdFailedToLoad: (LoadAdError error) {
+            debugPrint('InterstitialAd failed to load: $error');
+          },
+        ));
+  }
 
   @override
   Widget build(BuildContext context) {
-    // print("Setting Screen build... ${AdSize.largeBanner}");
-
     return PopScope(
       canPop: _canPop,
       onPopInvoked: (didPop) async {
-        // final result = await _interstitialAd?.show();
-        // print('_interstitialAd result $result');
-        _canPop = true;
+        if (_interstitialAd != null) {
+          await _interstitialAd?.show();
+          return;
+        }
+
         if (!didPop) {
           Navigator.of(context).pop();
         }
@@ -140,7 +174,7 @@ class _SettingScreenState extends State<SettingScreen> {
                     width: MediaQuery.of(context).size.shortestSide * 0.5,
                   ),
                 ),
-                // SizedBox(height: _getSmartBannerHeight()),
+                if (_bannerAdSize != null) AppBannerAd(adSize: _bannerAdSize!),
               ],
             )
           ],
