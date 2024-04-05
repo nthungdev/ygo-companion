@@ -34,6 +34,9 @@ jobs:
           channel: stable
           flutter-version: 3.19.0
 
+      - name: Install dependencies
+        run: flutter pub get
+
       - name: Build Web
         run: flutter build web --release
 
