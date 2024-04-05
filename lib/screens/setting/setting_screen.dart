@@ -1,9 +1,9 @@
 // import 'package:device_id/device_id.dart';
-import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:universal_platform/universal_platform.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:ygo_companion/widgets/app_banner_ad.dart';
@@ -59,6 +59,11 @@ class _SettingScreenState extends State<SettingScreen> {
   }
 
   Future<void> _getBannerAdSize() async {
+    if (!UniversalPlatform.isAndroid && !UniversalPlatform.isIOS) {
+      debugPrint("Not showing Ad because platform is neither Android or iOS");
+      return;
+    }
+
     final adSize =
         await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(
             MediaQuery.sizeOf(context).width.truncate());
@@ -76,14 +81,14 @@ class _SettingScreenState extends State<SettingScreen> {
 
   /// Loads interstitial ad
   void _loadInterstitialAd() {
-    if (!Platform.isAndroid && !Platform.isIOS) {
-      debugPrint("Not show Ad because platform is neither Android or iOS");
+    if (!UniversalPlatform.isAndroid && !UniversalPlatform.isIOS) {
+      debugPrint("Not showing Ad because platform is neither Android or iOS");
       return;
     }
 
     String adUnitId = kReleaseMode
         ? 'ca-app-pub-5774186272498727/9801779033'
-        : Platform.isAndroid
+        : UniversalPlatform.isAndroid
             ? 'ca-app-pub-3940256099942544/1033173712'
             : 'ca-app-pub-3940256099942544/4411468910';
 

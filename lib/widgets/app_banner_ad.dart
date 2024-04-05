@@ -1,8 +1,7 @@
-import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:universal_platform/universal_platform.dart';
 
 class AppBannerAd extends StatefulWidget {
   /// The requested size of the banner. Defaults to [AdSize.banner].
@@ -47,14 +46,14 @@ class _AppBannerAdState extends State<AppBannerAd> {
 
   /// Loads a banner ad
   void _loadAd() {
-    if (!Platform.isAndroid && !Platform.isIOS) {
-      debugPrint("Not show Ad because not Android or iOS");
+    if (!UniversalPlatform.isAndroid && !UniversalPlatform.isIOS) {
+      debugPrint("Not showing Ad because not Android or iOS");
       return;
     }
 
     String bannerUnitId = kReleaseMode
         ? 'ca-app-pub-5774186272498727/3817882665'
-        : Platform.isAndroid
+        : UniversalPlatform.isAndroid
             ? 'ca-app-pub-3940256099942544/6300978111' // Test id on Android
             : 'ca-app-pub-3940256099942544/2934735716'; // Test id on iOS
 
