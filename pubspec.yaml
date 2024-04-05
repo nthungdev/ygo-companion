@@ -6,6 +6,8 @@ publish_to: "none"
 
 environment:
   sdk: ">=3.3.3 <4.0.0"
+  # Needs fixed version for GitHub Workflow
+  flutter: 3.19.5
 
 dependencies:
   flutter:
