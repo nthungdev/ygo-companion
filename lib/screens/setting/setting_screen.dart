@@ -81,12 +81,9 @@ class _SettingScreenState extends State<SettingScreen> {
       return;
     }
 
-    String adUnitId = kDebugMode
-        ? Platform.isAndroid
-            ? 'ca-app-pub-3940256099942544/1033173712' // Test id on Android
-            : 'ca-app-pub-3940256099942544/4411468910' // Test id on iOS
+    String adUnitId = kReleaseMode
+        ? 'ca-app-pub-5774186272498727/9801779033'
         : Platform.isAndroid
-            // TODO replace with real unit ids
             ? 'ca-app-pub-3940256099942544/1033173712'
             : 'ca-app-pub-3940256099942544/4411468910';
 

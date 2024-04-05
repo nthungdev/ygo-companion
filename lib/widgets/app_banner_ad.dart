@@ -52,14 +52,11 @@ class _AppBannerAdState extends State<AppBannerAd> {
       return;
     }
 
-    String bannerUnitId = kDebugMode
-        ? Platform.isAndroid
-            ? 'ca-app-pub-3940256099942544/6300978111' // Test id on Android
-            : 'ca-app-pub-3940256099942544/2934735716' // Test id on iOS
+    String bannerUnitId = kReleaseMode
+        ? 'ca-app-pub-5774186272498727/3817882665'
         : Platform.isAndroid
-            // TODO replace with real unit ids
-            ? 'ca-app-pub-3940256099942544/6300978111'
-            : 'ca-app-pub-3940256099942544/2934735716';
+            ? 'ca-app-pub-3940256099942544/6300978111' // Test id on Android
+            : 'ca-app-pub-3940256099942544/2934735716'; // Test id on iOS
 
     BannerAd(
       size: widget.adSize,
