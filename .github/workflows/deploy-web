@@ -6,7 +6,7 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "main" ]
+    branches: [ "main", "github-pages" ]
   pull_request:
     branches: [ "main" ]
 
@@ -20,7 +20,7 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
-        
+
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
@@ -30,7 +30,7 @@ jobs:
       # Runs a single command using the runners shell
       - name: Build Web
         run: flutter build web --release
-            
+
   deploy:
     environment:
       name: github-pages
