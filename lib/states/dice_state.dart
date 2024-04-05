@@ -9,7 +9,7 @@ class DiceState extends ChangeNotifier {
   }
 
   final _randomizer = Random();
-  int _diceResult;
+  int? _diceResult;
 
   int get diceResult => _diceResult ?? 6;
 
@@ -17,8 +17,9 @@ class DiceState extends ChangeNotifier {
     List<int> allResults = [1, 2, 3, 4, 5, 6];
 
     for (int roll = 0; roll < 10; roll++) {
-      List<int> possibleResults = allResults.where((roll) => roll != diceResult).toList();
-      await Future.delayed(Duration(milliseconds: 150));
+      List<int> possibleResults =
+          allResults.where((roll) => roll != diceResult).toList();
+      await Future.delayed(const Duration(milliseconds: 150));
       _diceResult = possibleResults[_randomizer.nextInt(5)];
       notifyListeners();
     }

@@ -1,24 +1,30 @@
-import 'package:device_id/device_id.dart';
-import 'package:firebase_admob/firebase_admob.dart';
+// import 'package:device_id/device_id.dart';
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import 'package:ygo_companion/widgets/app_banner_ad.dart';
 import 'package:ygo_companion/widgets/calculator_type_list_tile.dart';
 import 'package:ygo_companion/widgets/theme_switcher.dart';
 
 const String testDevice = 'YOUR_DEVICE_ID';
 
 class SettingScreen extends StatefulWidget {
-  const SettingScreen({Key key}) : super(key: key);
+  const SettingScreen({super.key});
 
   @override
-  _SettingScreenState createState() => _SettingScreenState();
+  State<SettingScreen> createState() => _SettingScreenState();
 }
 
 class _SettingScreenState extends State<SettingScreen> {
-  BannerAd _bannerAd;
-  InterstitialAd _interstitialAd;
-  String _deviceId;
+  BannerAd? _bannerAd;
+  AdSize? _bannerAdSize;
+  InterstitialAd? _interstitialAd;
+  // String _deviceId;
+  bool _canPop = false;
 
   @override
   void initState() {
@@ -29,108 +35,155 @@ class _SettingScreenState extends State<SettingScreen> {
   @override
   void dispose() {
     _bannerAd?.dispose();
-    _interstitialAd?.dispose();
+    // _interstitialAd is disposed in FullScreenContentCallback
     super.dispose();
   }
 
-  final MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
-    childDirected: false,
-    nonPersonalizedAds: true,
-  );
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _getBannerAdSize();
+  }
 
   Future<void> init() async {
-    _bannerAd = createBannerAd()
-      ..load()
-      ..show();
-
-    _interstitialAd = createInterstitialAd()..load();
-    _deviceId = await DeviceId.getID;
-    print('device id $_deviceId');
+    _loadInterstitialAd();
   }
 
   _launchURL() async {
-    const url = 'https://www.facebook.com/ygoyutopia';
-    if (await canLaunch(url)) {
-      await launch(url);
+    final url = Uri.parse('https://www.facebook.com/ygoyutopia');
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
     } else {
       throw 'Could not launch $url';
     }
   }
 
-  double _getSmartBannerHeight() {
-    final deviceHeight = MediaQuery.of(context).size.height;
+  Future<void> _getBannerAdSize() async {
+    final adSize =
+        await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(
+            MediaQuery.sizeOf(context).width.truncate());
 
-    if (deviceHeight <= 400) {
-      return 32;
-    } else if (deviceHeight > 400 && deviceHeight <= 720) {
-      return 55;
-    } else
-      return 90;
+    if (adSize == null) {
+      debugPrint("Cannot get banner ad size");
+      return;
+    }
+
+    if (_bannerAdSize?.height != adSize.height ||
+        _bannerAdSize?.width != adSize.width) {
+      setState(() => _bannerAdSize = adSize);
+    }
   }
 
-  BannerAd createBannerAd() {
-    return BannerAd(
-      adUnitId: kDebugMode ? BannerAd.testAdUnitId : 'ca-app-pub-2953470737526040/3191146376',
-      size: AdSize.smartBanner,
-      targetingInfo: targetingInfo,
-      listener: (MobileAdEvent event) {
-        print("BannerAd event $event");
-      },
-    );
+  /// Loads interstitial ad
+  void _loadInterstitialAd() {
+    if (!Platform.isAndroid && !Platform.isIOS) {
+      debugPrint("Not show Ad because platform is neither Android or iOS");
+      return;
+    }
+
+    String adUnitId = kReleaseMode
+        ? 'ca-app-pub-5774186272498727/9801779033'
+        : Platform.isAndroid
+            ? 'ca-app-pub-3940256099942544/1033173712'
+            : 'ca-app-pub-3940256099942544/4411468910';
+
+    InterstitialAd.load(
+        adUnitId: adUnitId,
+        request: const AdRequest(),
+        adLoadCallback: InterstitialAdLoadCallback(
+          // Called when an ad is successfully received.
+          onAdLoaded: (ad) {
+            ad.fullScreenContentCallback = FullScreenContentCallback(
+                // Called when the ad showed the full screen content.
+                onAdShowedFullScreenContent: (ad) {
+                  setState(() => _canPop = true);
+                },
+                // Called when an impression occurs on the ad.
+                onAdImpression: (ad) {},
+                // Called when the ad failed to show full screen content.
+                onAdFailedToShowFullScreenContent: (ad, err) {
+                  ad.dispose();
+                  _interstitialAd = null;
+                  Navigator.of(context).pop();
+                },
+                // Called when the ad dismissed full screen content.
+                onAdDismissedFullScreenContent: (ad) {
+                  ad.dispose();
+                  _interstitialAd = null;
+                  Navigator.of(context).pop();
+                },
+                // Called when a click is recorded for an ad.
+                onAdClicked: (ad) {});
+
+            debugPrint('$ad loaded.');
+            // Keep a reference to the ad so you can show it later.
+            _interstitialAd = ad;
+          },
+          // Called when an ad request failed.
+          onAdFailedToLoad: (LoadAdError error) {
+            debugPrint('InterstitialAd failed to load: $error');
+          },
+        ));
   }
 
-  InterstitialAd createInterstitialAd() {
-    return InterstitialAd(
-      adUnitId: kDebugMode ? InterstitialAd.testAdUnitId : "ca-app-pub-2953470737526040/7597295246",
-      targetingInfo: targetingInfo,
-      listener: (MobileAdEvent event) {
-        print("InterstitialAd event $event");
-      },
+  Widget _buildPartnershipAndAd() {
+    return Column(
+      children: <Widget>[
+        const Text("Partnered with"),
+        TextButton(
+          style: TextButton.styleFrom(
+            padding: const EdgeInsets.all(10),
+          ),
+          onPressed: _launchURL,
+          child: Image.asset(
+            "assets/logo/yutopia_logo.png",
+            fit: BoxFit.contain,
+            width: MediaQuery.of(context).size.shortestSide * 0.5,
+          ),
+        ),
+        if (_bannerAdSize != null) AppBannerAd(adSize: _bannerAdSize!),
+      ],
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    print("Setting Screen build... ${AdSize.largeBanner}");
+    final orientation = MediaQuery.of(context).orientation;
 
-    return WillPopScope(
-      onWillPop: () async {
-        final result = await _interstitialAd?.show();
-        print('_interstitialAd result $result');
-        return true;
+    return PopScope(
+      canPop: _canPop,
+      onPopInvoked: (didPop) async {
+        if (_interstitialAd != null) {
+          await _interstitialAd?.show();
+          return;
+        }
+
+        if (!didPop) {
+          Navigator.of(context).pop();
+        }
       },
       child: Scaffold(
-        appBar: AppBar(title: Text("Setting")),
+        appBar: AppBar(title: const Text("Setting")),
         body: Column(
           children: <Widget>[
             Expanded(
               child: ListView(
-                padding: EdgeInsets.all(5),
                 children: <Widget>[
                   if (kDebugMode) ...[
                     CalculatorTypeListTile(),
-                    Divider(thickness: 1),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 5),
+                      child: Divider(thickness: 1),
+                    ),
                   ],
                   SystemThemeSwitchListTile(),
                   ThemeSwitchListTile(),
+                  if (orientation == Orientation.landscape)
+                    _buildPartnershipAndAd(),
                 ],
               ),
             ),
-            Column(
-              children: <Widget>[
-                Text("Partner with"),
-                FlatButton(
-                  padding: EdgeInsets.all(5),
-                  onPressed: _launchURL,
-                  child: Image.asset(
-                    "assets/logo/yutopia_logo.png",
-                    fit: BoxFit.contain,
-                    width: MediaQuery.of(context).size.shortestSide * 0.5,
-                  ),
-                ),
-                SizedBox(height: _getSmartBannerHeight()),
-              ],
-            )
+            if (orientation == Orientation.portrait) _buildPartnershipAndAd(),
           ],
         ),
       ),

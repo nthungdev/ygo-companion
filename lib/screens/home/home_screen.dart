@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 import 'package:ygo_companion/routes.dart';
 import 'package:ygo_companion/states/theme_state.dart';
-import 'package:ygo_companion/widgets/theme_switcher.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key key}) : super(key: key);
+  const HomeScreen({super.key});
 
   void handleGoToCalculator(context) {
     Navigator.of(context).pushNamed(Routes.calculator);
@@ -31,7 +29,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: <Widget>[
-          Expanded(
+          const Expanded(
             child: Center(
               child: Text(
                 "YGO COMPANION",
@@ -47,15 +45,19 @@ class HomeScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                RaisedButton(
+                ElevatedButton(
                   onPressed: () => handleGoToCalculator(context),
-                  child: Text("CALCULATOR"),
+                  child: const Text("CALCULATOR"),
                 ),
-                RaisedButton(
-                  color: ThemeState.of(context).isDarkMode ? Colors.grey[200] : Colors.grey[700],
+                const SizedBox(height: 10),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: ThemeState.of(context).isDarkMode
+                        ? Colors.grey[200]
+                        : Colors.grey[700],
+                  ),
                   onPressed: () => handleGoToSetting(context),
-                  textTheme: ButtonTextTheme.primary,
-                  child: Text("SETTINGS"),
+                  child: const Text("SETTINGS"),
                 ),
               ],
             ),

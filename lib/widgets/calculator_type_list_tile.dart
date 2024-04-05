@@ -2,20 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:ygo_companion/states/calculator_setting_state.dart';
 
 class CalculatorTypeListTile extends StatefulWidget {
-  CalculatorTypeListTile({Key key}) : super(key: key);
+  const CalculatorTypeListTile({super.key});
 
   @override
-  _CalculatorTypeListTileState createState() => _CalculatorTypeListTileState();
+  State<CalculatorTypeListTile> createState() => _CalculatorTypeListTileState();
 }
 
 class _CalculatorTypeListTileState extends State<CalculatorTypeListTile> {
   void _handleOptionSelected(CalculatorLayout layout) async {
-    CalculatorSettingState state = CalculatorSettingState.of(context, listen: false);
+    CalculatorSettingState state =
+        CalculatorSettingState.of(context, listen: false);
     await state.changeLayout(layout);
   }
 
   void _showOptions() async {
-    CalculatorSettingState state = CalculatorSettingState.of(context, listen: false);
+    CalculatorSettingState state =
+        CalculatorSettingState.of(context, listen: false);
 
     final result = await showDialog(
         context: context,
@@ -50,13 +52,13 @@ class _CalculatorTypeListTileState extends State<CalculatorTypeListTile> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
-                  FlatButton(
+                  TextButton(
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    child: Text("Cancel"),
+                    child: const Text("Cancel"),
                   ),
-                  SizedBox(width: 20),
+                  const SizedBox(width: 20),
                 ],
               )
             ],
@@ -72,7 +74,7 @@ class _CalculatorTypeListTileState extends State<CalculatorTypeListTile> {
 
     return ListTile(
       onTap: _showOptions,
-      title: Text("Calculator Type"),
+      title: const Text("Calculator Type"),
       subtitle: Text(state.getName(state.calculatorLayout)),
     );
   }

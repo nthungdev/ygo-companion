@@ -9,8 +9,10 @@ import 'package:ygo_companion/states/dice_state.dart';
 import 'package:ygo_companion/states/clock_state.dart';
 
 class CalculatorScreen extends StatefulWidget {
+  const CalculatorScreen({super.key});
+
   @override
-  _CalculatorScreenState createState() => _CalculatorScreenState();
+  State<CalculatorScreen> createState() => _CalculatorScreenState();
 }
 
 class _CalculatorScreenState extends State<CalculatorScreen> {
@@ -19,19 +21,16 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
   bool _isPlaying = false;
   bool _isUsingDice = false;
   bool _isUsingCoin = false;
-  ClockState _staticClockState;
   bool _usingClockA = true;
   bool _usingClockB = false;
   bool _usingMainClock = true;
+  bool _orientationReady = false;
+  late ClockState _staticClockState;
 
   @override
   void initState() {
     super.initState();
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeRight,
-      DeviceOrientation.landscapeLeft,
-    ]);
-    // SystemChrome.setEnabledSystemUIOverlays([]);
+    init();
     _staticClockState = ClockState.of(context, listen: false);
   }
 
@@ -45,6 +44,22 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
     ]);
     _staticClockState.stopAll(notifyListeners: false);
     super.dispose();
+  }
+
+  Future<void> init() async {
+    await SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
+    ]);
+    // hack to fix overflow on the 1st frame of building IconButtonsRow
+    // while changing the orientation
+    // easier to reproduce on iOS
+    // to debug, maybe, log the constraints from LayoutBuilder in pro_layout_5
+    await Future.delayed(Duration(milliseconds: 250));
+    // SystemChrome.setEnabledSystemUIOverlays([]);
+    setState(() {
+      _orientationReady = true;
+    });
   }
 
   void handleClockTap({
@@ -160,11 +175,17 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (!_orientationReady) {
+      return Container();
+    }
+
     final clockService = ClockState.of(context);
     final calculatorState = CalculatorState.of(context);
     final calculatorSettingState = CalculatorSettingState.of(context);
 
-    final isPlaying = clockService.isRunning || clockService.isRunningA || clockService.isRunningB;
+    final isPlaying = clockService.isRunning ||
+        clockService.isRunningA ||
+        clockService.isRunningB;
 
     switch (calculatorSettingState.calculatorLayout) {
       case CalculatorLayout.HN_AV_1:

@@ -13,7 +13,7 @@ class Routes {
   /// Returns Map of routes for MaterialApp
   static Map<String, WidgetBuilder> routes(BuildContext context) {
     return {
-      home: (_) => HomeScreen(),
+      home: (_) => const HomeScreen(),
       calculator: (_) => MultiProvider(
             providers: [
               ChangeNotifierProvider(create: (_) => CalculatorState()),
@@ -22,7 +22,7 @@ class Routes {
             ],
             child: CalculatorScreen(),
           ),
-      setting: (_) => SettingScreen(),
+      setting: (_) => const SettingScreen(),
     };
   }
 

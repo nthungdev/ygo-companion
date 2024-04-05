@@ -12,30 +12,29 @@ class Player {
   /// Clock
   Duration clock;
 
-  List<String> logs;
+  List<String> logs = [startingLp.toString()];
 
-  Player({
-    this.name,
+  Player(
+    this.name, {
     this.lp = startingLp,
     this.calculation = "",
     this.clock = Duration.zero,
-    this.logs,
+    List<String>? logs,
   }) {
-    logs = [startingLp.toString()];
+    this.logs = logs ?? this.logs;
   }
 
   Player copyWith({
-    String name,
-    int lp,
-    String calculation,
-    Duration duration,
-    List<String> logs,
+    int? lp,
+    String? calculation,
+    Duration? duration,
+    List<String>? logs,
   }) {
     return Player(
-      name: name ?? this.name,
+      name,
+      clock: clock,
       lp: lp ?? this.lp,
       calculation: calculation ?? this.calculation,
-      clock: clock ?? this.clock,
       logs: logs ?? this.logs,
     );
   }

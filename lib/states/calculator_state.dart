@@ -1,5 +1,4 @@
 import 'dart:core';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:math_expressions/math_expressions.dart';
 import 'package:provider/provider.dart';
@@ -8,20 +7,16 @@ import 'package:ygo_companion/utils/formatter.dart';
 
 /// Perform calculator logic and control the state of Calculator Screen
 class CalculatorState extends ChangeNotifier {
-  static CalculatorState of(BuildContext context, {bool listen: true}) {
+  static CalculatorState of(BuildContext context, {bool listen = true}) {
     return Provider.of<CalculatorState>(context, listen: listen);
   }
 
-  CalculatorState() {
-    playerA = Player(name: "A");
-    playerB = Player(name: "B");
-  }
+  Player playerA = Player("A");
+  Player playerB = Player("B");
+
+  CalculatorState();
 
   // PRIVATE VARIABLES //
-
-  // GETTERS //
-  Player playerA;
-  Player playerB;
 
   // METHODS //
 
@@ -38,7 +33,8 @@ class CalculatorState extends ChangeNotifier {
   /// Throw Exception if invalid expression
   void playerInput(bool forPlayerA, String input) {
     // TODO:
-    List<String> validInputs = "1,2,3,4,5,6,7,8,9,0,00,=,x,C,(,),+,-,x2,÷2".split(",");
+    List<String> validInputs =
+        "1,2,3,4,5,6,7,8,9,0,00,=,x,C,(,),+,-,x2,÷2".split(",");
 
     // print('input $input');
 
@@ -49,8 +45,8 @@ class CalculatorState extends ChangeNotifier {
     switch (input) {
       case "x":
         if (selectedPlayer.calculation.isNotEmpty) {
-          selectedPlayer.calculation =
-              selectedPlayer.calculation.substring(0, selectedPlayer.calculation.length - 1);
+          selectedPlayer.calculation = selectedPlayer.calculation
+              .substring(0, selectedPlayer.calculation.length - 1);
         }
         break;
       case "C":
@@ -64,8 +60,13 @@ class CalculatorState extends ChangeNotifier {
         try {
           final calculation = formatExpression(selectedPlayer.calculation);
           print('calculation $calculation');
+          if (calculation == null) {
+            throw "Invalid expression";
+          }
+
           Expression exp = p.parse(selectedPlayer.logs.last + calculation);
-          final int evaluated = exp.evaluate(EvaluationType.REAL, ContextModel()).toInt();
+          final int evaluated =
+              exp.evaluate(EvaluationType.REAL, ContextModel()).toInt();
           // print("evaluated $evaluated");
           selectedPlayer.logs.addAll([
             calculation.replaceAll("*", "x").replaceAll("/", "÷"),

@@ -3,37 +3,29 @@ import 'package:flutter/material.dart';
 class DuelLog extends StatefulWidget {
   final bool show;
   final List<String> logs;
-  final double width;
-  final Color color;
   final String calculation;
   final bool selected;
 
   const DuelLog({
-    Key key,
-    this.width,
+    super.key,
     this.show = false,
     this.logs = const [],
-    this.calculation,
     this.selected = false,
-    this.color,
-  })  : assert(logs != null),
-        super(key: key);
+    required this.calculation,
+  });
 
   @override
-  _DuelLogState createState() => _DuelLogState();
+  State<DuelLog> createState() => _DuelLogState();
 }
 
 class _DuelLogState extends State<DuelLog> {
-  ScrollController _scrollController;
-  double height;
-  int logsSize;
+  final ScrollController _scrollController = ScrollController();
+  late int logsSize;
 
   @override
   void initState() {
     super.initState();
     logsSize = widget.logs.length;
-
-    _scrollController = ScrollController();
   }
 
   @override
@@ -59,16 +51,18 @@ class _DuelLogState extends State<DuelLog> {
   Widget build(BuildContext context) {
     List<String> logs = [...widget.logs, widget.calculation];
     logs = logs.expand((item) {
-      if (logs.indexOf(item) % 2 == 1 && logs.indexOf(item) != logs.length - 1) {
+      if (logs.indexOf(item) % 2 == 1 &&
+          logs.indexOf(item) != logs.length - 1) {
         return [item, "divider"];
-      } else
+      } else {
         return [item];
+      }
     }).toList();
 
     return Container(
       color: widget.selected
-          ? Theme.of(context).accentColor.withAlpha(200)
-          : Theme.of(context).backgroundColor.withAlpha(200),
+          ? Theme.of(context).colorScheme.secondary.withAlpha(200)
+          : Theme.of(context).colorScheme.background.withAlpha(200),
       child: ListView(
         controller: _scrollController,
         children: <Widget>[
@@ -78,20 +72,22 @@ class _DuelLogState extends State<DuelLog> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 ...List.generate(logs.length, (index) {
-                  if (logs[index] == "divider")
-                    return Divider(
+                  if (logs[index] == "divider") {
+                    return const Divider(
                       color: Colors.black45,
                       height: 2,
                     );
-                  else
+                  } else {
                     return Text(
                       logs[index],
                       textAlign: TextAlign.right,
-                      style:
-                          index == logs.length - 2 ? TextStyle(fontWeight: FontWeight.bold) : null,
+                      style: index == logs.length - 2
+                          ? const TextStyle(fontWeight: FontWeight.bold)
+                          : null,
                     );
+                  }
                 }),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
               ],
             ),
           )

@@ -3,37 +3,35 @@ import 'package:provider/provider.dart';
 import 'package:ygo_companion/states/clock_state.dart';
 
 class PlayerClock extends StatelessWidget {
-  final double width;
-  final Duration clock;
-  final Color color;
-  final VoidCallback onTap;
-  final VoidCallback onLongPressed;
-  final String label;
+  final double? width;
+  final VoidCallback? onTap;
+  final VoidCallback? onLongPressed;
+  final String? label;
   final bool forPlayerA;
 
   const PlayerClock({
-    Key key,
+    super.key,
     this.width,
     this.label,
-    this.clock,
-    this.color,
     this.onTap,
-    @required this.forPlayerA,
     this.onLongPressed,
-  }) : super(key: key);
+    required this.forPlayerA,
+  });
 
-  String formattedMinutes(Duration watch) {
-    if (watch == null)
+  String formattedMinutes(Duration? watch) {
+    if (watch == null) {
       return "00";
-    else
+    } else {
       return (watch.inSeconds ~/ 60).toString().padLeft(2, "0");
+    }
   }
 
-  String formattedSeconds(Duration watch) {
-    if (watch == null)
+  String formattedSeconds(Duration? watch) {
+    if (watch == null) {
       return "00";
-    else
+    } else {
       return (watch.inSeconds % 60).toString().padLeft(2, "0");
+    }
   }
 
   @override
@@ -49,7 +47,7 @@ class PlayerClock extends StatelessWidget {
 
             return Container(
               width: width,
-              color: Theme.of(context).backgroundColor.withAlpha(200),
+              color: Theme.of(context).colorScheme.background.withAlpha(200),
               child: Stack(
                 children: <Widget>[
                   if (label != null)
@@ -58,11 +56,15 @@ class PlayerClock extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 2),
                         child: Text(
-                          label,
+                          label!,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                            color: Theme.of(context).textTheme.body1.color.withAlpha(125),
+                            color: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.color
+                                ?.withAlpha(125),
                           ),
                         ),
                       ),
@@ -75,8 +77,9 @@ class PlayerClock extends StatelessWidget {
                         child: Align(
                           alignment: Alignment.centerRight,
                           child: Selector<ClockState, Duration>(
-                            selector: (_, state) =>
-                                forPlayerA ? state.currentDurationA : state.currentDurationB,
+                            selector: (_, state) => forPlayerA
+                                ? state.currentDurationA
+                                : state.currentDurationB,
                             builder: (_, watch, __) {
                               return Text(
                                 formattedMinutes(watch),
@@ -90,8 +93,9 @@ class PlayerClock extends StatelessWidget {
                       Expanded(
                         flex: 1,
                         child: Selector<ClockState, Duration>(
-                          selector: (_, state) =>
-                              forPlayerA ? state.currentDurationA : state.currentDurationB,
+                          selector: (_, state) => forPlayerA
+                              ? state.currentDurationA
+                              : state.currentDurationB,
                           builder: (_, watch, __) {
                             return Text(
                               formattedSeconds(watch),

@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 
 class CompanionTheme {
   static Color primaryColor = Colors.deepPurple;
-  static Color accentColor = Colors.amber.withAlpha(200);
+  static Color secondaryColor = Colors.amber.withAlpha(200);
 
   static ThemeData get lightTheme {
     return ThemeData.light().copyWith(
       primaryColor: primaryColor,
-      backgroundColor: Colors.white,
-      accentColor: accentColor,
+      colorScheme: ColorScheme.light(
+        background: Colors.white,
+        secondary: secondaryColor,
+      ),
       buttonTheme: ButtonThemeData(
         buttonColor: Colors.deepPurple,
         textTheme: ButtonTextTheme.primary,
@@ -24,8 +26,10 @@ class CompanionTheme {
   static ThemeData get darkTheme {
     return ThemeData.dark().copyWith(
       primaryColor: primaryColor,
-      accentColor: accentColor,
-      // backgroundColor: Colors.grey[800],
+      colorScheme: ColorScheme.dark(
+        // background: Colors.grey[800],
+        secondary: secondaryColor,
+      ),
       buttonTheme: ButtonThemeData(
         buttonColor: Colors.deepPurple,
         textTheme: ButtonTextTheme.normal,
@@ -34,8 +38,9 @@ class CompanionTheme {
           brightness: Brightness.dark,
         ),
       ),
-      buttonColor: primaryColor,
       primaryColorDark: primaryColor,
+      // TODO update button theme
+      // buttonColor: primaryColor,
       toggleButtonsTheme: ToggleButtonsThemeData(
         color: primaryColor,
         fillColor: primaryColor,

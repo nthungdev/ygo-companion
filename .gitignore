@@ -32,7 +32,6 @@
 /build/
 
 # Web related
-lib/generated_plugin_registrant.dart
 
 # Symbolication related
 app.*.symbols
@@ -46,3 +45,5 @@ android/key.properties
 node_modules
 upload_certificate.pem
 keystore.jks
+
+.firebase
