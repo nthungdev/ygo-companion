@@ -129,8 +129,30 @@ class _SettingScreenState extends State<SettingScreen> {
         ));
   }
 
+  Widget _buildPartnershipAndAd() {
+    return Column(
+      children: <Widget>[
+        const Text("Partnered with"),
+        TextButton(
+          style: TextButton.styleFrom(
+            padding: const EdgeInsets.all(10),
+          ),
+          onPressed: _launchURL,
+          child: Image.asset(
+            "assets/logo/yutopia_logo.png",
+            fit: BoxFit.contain,
+            width: MediaQuery.of(context).size.shortestSide * 0.5,
+          ),
+        ),
+        if (_bannerAdSize != null) AppBannerAd(adSize: _bannerAdSize!),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final orientation = MediaQuery.of(context).orientation;
+
     return PopScope(
       canPop: _canPop,
       onPopInvoked: (didPop) async {
@@ -149,34 +171,22 @@ class _SettingScreenState extends State<SettingScreen> {
           children: <Widget>[
             Expanded(
               child: ListView(
-                padding: const EdgeInsets.all(5),
-                children: const <Widget>[
+                children: <Widget>[
                   if (kDebugMode) ...[
                     CalculatorTypeListTile(),
-                    Divider(thickness: 1),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 5),
+                      child: Divider(thickness: 1),
+                    ),
                   ],
                   SystemThemeSwitchListTile(),
                   ThemeSwitchListTile(),
+                  if (orientation == Orientation.landscape)
+                    _buildPartnershipAndAd(),
                 ],
               ),
             ),
-            Column(
-              children: <Widget>[
-                const Text("Partnered with"),
-                TextButton(
-                  style: TextButton.styleFrom(
-                    padding: const EdgeInsets.all(10),
-                  ),
-                  onPressed: _launchURL,
-                  child: Image.asset(
-                    "assets/logo/yutopia_logo.png",
-                    fit: BoxFit.contain,
-                    width: MediaQuery.of(context).size.shortestSide * 0.5,
-                  ),
-                ),
-                if (_bannerAdSize != null) AppBannerAd(adSize: _bannerAdSize!),
-              ],
-            )
+            if (orientation == Orientation.portrait) _buildPartnershipAndAd(),
           ],
         ),
       ),
