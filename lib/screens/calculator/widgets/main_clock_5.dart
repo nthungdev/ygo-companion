@@ -40,7 +40,7 @@ class MainClock extends StatelessWidget {
           padding: const EdgeInsets.only(),
         ),
         child: Container(
-          color: Theme.of(context).colorScheme.background.withAlpha(200),
+          color: Theme.of(context).colorScheme.surface.withAlpha(200),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[

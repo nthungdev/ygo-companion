@@ -24,7 +24,7 @@ class CalculatorPad extends StatelessWidget {
         AspectRatio(
           aspectRatio: 3 / 4,
           child: Container(
-            color: Theme.of(context).colorScheme.background.withAlpha(200),
+            color: Theme.of(context).colorScheme.surface.withAlpha(200),
             child: GridView.count(
               padding: const EdgeInsets.all(0),
               physics: const NeverScrollableScrollPhysics(),
@@ -55,7 +55,7 @@ class CalculatorPad extends StatelessWidget {
         AspectRatio(
           aspectRatio: 2 / 4,
           child: Container(
-            color: Theme.of(context).colorScheme.background.withAlpha(200),
+            color: Theme.of(context).colorScheme.surface.withAlpha(200),
             child: GridView.count(
               padding: const EdgeInsets.all(0),
               physics: const NeverScrollableScrollPhysics(),

@@ -8,7 +8,7 @@ class CompanionTheme {
     return ThemeData.light().copyWith(
       primaryColor: primaryColor,
       colorScheme: ColorScheme.light(
-        background: Colors.white,
+        surface: Colors.white,
         secondary: secondaryColor,
       ),
       buttonTheme: ButtonThemeData(

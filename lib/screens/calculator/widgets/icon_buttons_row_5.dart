@@ -27,7 +27,7 @@ class IconButtonsRow extends StatelessWidget {
     return Container(
       height: height,
       width: width,
-      color: Theme.of(context).colorScheme.background.withAlpha(200),
+      color: Theme.of(context).colorScheme.surface.withAlpha(200),
       child: Material(
         color: Colors.transparent,
         child: Row(
