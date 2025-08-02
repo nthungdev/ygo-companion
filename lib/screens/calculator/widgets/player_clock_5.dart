@@ -47,7 +47,7 @@ class PlayerClock extends StatelessWidget {
 
             return Container(
               width: width,
-              color: Theme.of(context).colorScheme.background.withAlpha(200),
+              color: Theme.of(context).colorScheme.surface.withAlpha(200),
               child: Stack(
                 children: <Widget>[
                   if (label != null)

@@ -29,7 +29,7 @@ class PlayerLP extends StatelessWidget {
         child: Container(
           color: selected
               ? Theme.of(context).colorScheme.secondary.withAlpha(200)
-              : Theme.of(context).colorScheme.background.withAlpha(200),
+              : Theme.of(context).colorScheme.surface.withAlpha(200),
           child: LayoutBuilder(
             builder: (context, constraint) {
               return Stack(

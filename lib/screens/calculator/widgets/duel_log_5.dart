@@ -62,7 +62,7 @@ class _DuelLogState extends State<DuelLog> {
     return Container(
       color: widget.selected
           ? Theme.of(context).colorScheme.secondary.withAlpha(200)
-          : Theme.of(context).colorScheme.background.withAlpha(200),
+          : Theme.of(context).colorScheme.surface.withAlpha(200),
       child: ListView(
         controller: _scrollController,
         children: <Widget>[
