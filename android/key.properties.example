@@ -1,0 +1,4 @@
+storePassword=<key_password>
+keyPassword=<key_password>
+keyAlias=appUpload
+storeFile=<path_to_your_keystore_file>
