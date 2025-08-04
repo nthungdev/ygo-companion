@@ -9,7 +9,7 @@ class CalculatorSettingState extends ChangeNotifier {
 
   final _kSPLayoutKey = "CalculatorLayout";
   late CalculatorLayout _layout;
-  SharedPreferences _prefs;
+  final SharedPreferences _prefs;
 
   CalculatorLayout? get calculatorLayout => _layout;
 

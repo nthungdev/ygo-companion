@@ -88,7 +88,7 @@ class ProLayout5 extends StatelessWidget {
   /// Player B clock
   /// Player B LP
   Widget _buildTopRow({required double height}) {
-    return Container(
+    return SizedBox(
       height: height,
       child: Row(
         children: <Widget>[

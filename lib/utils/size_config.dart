@@ -1,4 +1,5 @@
 /// Original: https://github.com/dancamdev/effectively_scale_UI_according_to_different_screen_sizes
+library;
 
 import 'package:flutter/widgets.dart';
 
@@ -40,12 +41,12 @@ class SizeConfig {
     blockSizeHorizontal = screenWidth / 100;
     blockSizeVertical = screenHeight / 100;
 
-    final _safeAreaHorizontal =
+    final safeAreaHorizontal =
         _mediaQueryData.padding.left + _mediaQueryData.padding.right;
-    final _safeAreaVertical =
+    final safeAreaVertical =
         _mediaQueryData.padding.top + _mediaQueryData.padding.bottom;
 
-    safeBlockHorizontal = (screenWidth - _safeAreaHorizontal) / 100;
-    safeBlockVertical = (screenHeight - _safeAreaVertical) / 100;
+    safeBlockHorizontal = (screenWidth - safeAreaHorizontal) / 100;
+    safeBlockVertical = (screenHeight - safeAreaVertical) / 100;
   }
 }

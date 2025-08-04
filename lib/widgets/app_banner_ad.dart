@@ -74,7 +74,7 @@ class _AppBannerAdState extends State<AppBannerAd> {
           ad.dispose();
         },
       ),
-    )..load();
+    ).load();
   }
 
   @override

@@ -15,7 +15,7 @@ class ThemeState with ChangeNotifier {
   bool get isDarkMode => Theme.of(_context).brightness == Brightness.dark;
 
   ThemeMode _mode = ThemeMode.system;
-  SharedPreferences _prefs;
+  final SharedPreferences _prefs;
 
   ThemeMode get mode => _mode;
 

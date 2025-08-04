@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:ygo_companion/states/theme_state.dart';
 import 'package:ygo_companion/utils/companion_theme.dart';
 
-typedef void OnChangeCallback(bool isDark);
+typedef OnChangeCallback = void Function(bool isDark);
 
 /// On: dark mode
 ///

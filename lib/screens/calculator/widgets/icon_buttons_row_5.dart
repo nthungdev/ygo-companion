@@ -50,7 +50,7 @@ class IconButtonsRow extends StatelessWidget {
             ),
             IconButton(
               onPressed: onCoin,
-              icon: const Icon(CustomIcons.coin_circle),
+              icon: const Icon(CustomIcons.coinCircle),
               tooltip: "Toss a coin",
             ),
             IconButton(
