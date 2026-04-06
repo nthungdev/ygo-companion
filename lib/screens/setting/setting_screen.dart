@@ -11,6 +11,7 @@ import 'package:ygo_companion/widgets/calculator_type_list_tile.dart';
 import 'package:ygo_companion/widgets/theme_switcher.dart';
 
 const String testDevice = 'YOUR_DEVICE_ID';
+const String yutopiaFacebookUrl = 'https://www.facebook.com/Yutopia180916';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});
@@ -50,7 +51,7 @@ class _SettingScreenState extends State<SettingScreen> {
   }
 
   _launchURL() async {
-    final url = Uri.parse('https://www.facebook.com/ygoyutopia');
+    final url = Uri.parse(yutopiaFacebookUrl);
     if (await canLaunchUrl(url)) {
       await launchUrl(url);
     } else {
