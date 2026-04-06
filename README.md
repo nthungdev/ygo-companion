@@ -2,6 +2,13 @@
 
 A mobile app to accompany Yu-Gi-Oh! players.
 
+## Get Started
+
+```sh
+flutter pub get
+flutter run
+```
+
 ## Folder structure
 
 ```
