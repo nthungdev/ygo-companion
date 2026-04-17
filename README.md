@@ -4,9 +4,20 @@ A mobile app to accompany Yu-Gi-Oh! players.
 
 ## Get Started
 
+### Install dependencies
+
 ```sh
 flutter pub get
+```
+
+### Run the app
+
+```sh
 flutter run
+
+# List connected devices
+flutter devices
+flutter run -d <device_id>
 ```
 
 ## Folder structure
