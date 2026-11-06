@@ -9,5 +9,5 @@ All notable changes to this project are documented in this file.
 - Changed(android): adaptive android logo
 - Migrate to Flutter SDK 3.41
 
-[Unreleased]: https://github.com/Venera-AI/venera-mobile/compare/v0.2.3...main
-[0.2.3]: https://github.com/Venera-AI/venera-mobile/compare/v0.2.2...v0.2.3
+[Unreleased]: https://github.com/nthungdev/ygo-companion/compare/v0.2.3+5...main
+[0.2.3]: https://github.com/nthungdev/ygo-companion/compare/v0.2.2+4...v0.2.3+5
