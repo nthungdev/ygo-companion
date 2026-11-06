@@ -5,12 +5,6 @@ A companion app for Yu-Gi-Oh! players. Track life points, time your duels, and r
 **Try it on the web:** [nthungdev.github.io/ygo-companion](https://nthungdev.github.io/ygo-companion/)
 <!-- TODO: add a Google Play badge if the app is published -->
 
-<p align="center">
-  <img src="docs/screenshot-calculator.png" width="280" alt="Life point calculator" />
-  <img src="docs/screenshot-settings.png" width="280" alt="Settings" />
-</p>
-<!-- TODO: add screenshots -->
-
 ## Features
 
 - **Life point calculator** for two players, with expression input (for example `-(1000+500)`)
