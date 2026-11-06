@@ -1,112 +1,49 @@
-# ygo_companion
+# YGO Companion
 
-A mobile app to accompany Yu-Gi-Oh! players.
+A companion app for Yu-Gi-Oh! players. Track life points, time your duels, and roll dice or flip coins, all from one screen.
 
-## Get Started
+**Try it on the web:** [nthungdev.github.io/ygo-companion](https://nthungdev.github.io/ygo-companion/)
+<!-- TODO: add a Google Play badge if the app is published -->
 
-### Install dependencies
+<p align="center">
+  <img src="docs/screenshot-calculator.png" width="280" alt="Life point calculator" />
+  <img src="docs/screenshot-settings.png" width="280" alt="Settings" />
+</p>
+<!-- TODO: add screenshots -->
+
+## Features
+
+- **Life point calculator** for two players, with expression input (for example `-(1000+500)`)
+- **Duel log** recording every life-point change
+- **Duel clock** with a match timer and per-player timers
+- **Dice and coin toss**
+- **Light and dark themes**, plus a system-theme option
+- Settings are saved between sessions
+
+## Tech stack
+
+Flutter 3.32 · Dart · Provider (state management) · shared_preferences · Google Mobile Ads
+
+Builds for Android, iOS, and web.
+
+## Getting started
 
 ```sh
 flutter pub get
+flutter run                 # or: flutter run -d <device_id>
 ```
 
-### Run the app
-
-```sh
-flutter run
-
-# List connected devices
-flutter devices
-flutter run -d <device_id>
-```
-
-## Folder structure
+## Project structure
 
 ```text
 lib/
-  app.dart
-  main.dart
-  theme.dart
-  states/
-  screens/
-    screen_a/
-    screen_b/
-      widgets/
-  widgets/
+  screens/        # home, calculator (layouts and widgets), settings
+  states/         # Provider state: calculator, clock, dice, coin, theme
+  widgets/        # shared widgets
   models/
+  utils/
 ```
 
-`lib/widgets/`
-Common widget shared across the app
+## Releases
 
-`lib/screens/<screen_name>/widgets/`
-Widgets specific for <screen_name>
-
-## Release
-
-### Update App Version
-
-Update the app version in [`pubspec.yaml`](pubspec.yaml) by modifying the `version` field.
-
-### Update Changelog
-
-Update [`CHANGELOG.md`](CHANGELOG.md) before creating the release tag.
-
-- Move items from `Unreleased` into a new version section using the release date.
-- Keep entries concise and user-facing.
-- Reuse the same version notes for the GitHub Release description.
-
-Example:
-
-```md
-## [0.0.1] - 2026-04-09
-
-- Fixed: keyboard interaction issues in chat and document editing.
-- Added: feature chatbot can predict user's age.
-- Removed: ability to edit messages after sending.
-```
-
-### Git Tagging
-
-After committing your changes:
-
-```bash
-# Create an annotated git tag with the version number
-git tag -a v<VERSION> -m "Release version <VERSION>"
-
-# Push the tag to the repository
-git push origin v<VERSION>
-
-# Or push all tags at once
-git push --tags
-```
-
-Example:
-
-```bash
-git tag -a v1.2.3 -m "Release version 1.2.3"
-git push origin v1.2.3
-```
-
-### Publish on Play Console
-
-#### Prepare the upload key and the certificate
-
-1. Get the upload key and the certificate, move them to the root folder
-
-2. Create a file `key.properties` in `./android` with the following content. Then, replace the password, alias, and path.
-
-```properties
-storePassword=<password>
-keyPassword=<password>
-keyAlias=<alias>
-storeFile=<path to upload key file>
-```
-
-Before releasing a new version of the app, follow these steps:
-
-#### Build the Android app bundle
-
-```sh
-flutter build appbundle
-```
+See [CHANGELOG.md](CHANGELOG.md). Maintainers: the release process (versioning, tagging, Play Console build) is in [RELEASING.md](RELEASING.md).
