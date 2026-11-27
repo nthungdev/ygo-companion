@@ -103,4 +103,27 @@ void main() {
     await state.switchMode(ThemeMode.system);
     expect(ThemeState(prefs).mode, ThemeMode.system);
   });
+
+  group('legacy darkTheme value', () {
+    Future<ThemeMode> loadWith(Map<String, Object> values) async {
+      SharedPreferences.setMockInitialValues(values);
+      return ThemeState(await SharedPreferences.getInstance()).mode;
+    }
+
+    test('is used until themeMode is saved', () async {
+      expect(await loadWith({'darkTheme': true}), ThemeMode.dark);
+      expect(await loadWith({'darkTheme': false}), ThemeMode.light);
+    });
+
+    test('defaults to system when nothing is saved', () async {
+      expect(await loadWith({}), ThemeMode.system);
+    });
+
+    test('themeMode wins over the legacy value', () async {
+      expect(
+        await loadWith({'darkTheme': true, 'themeMode': 'system'}),
+        ThemeMode.system,
+      );
+    });
+  });
 }
