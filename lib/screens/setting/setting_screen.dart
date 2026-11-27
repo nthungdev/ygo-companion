@@ -173,20 +173,27 @@ class _SettingScreenState extends State<SettingScreen> {
         body: Column(
           children: <Widget>[
             Expanded(
-              child: ListView(
-                children: <Widget>[
-                  if (kDebugMode) ...[
-                    CalculatorTypeListTile(),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 5),
-                      child: Divider(thickness: 1),
-                    ),
+              child: ScrollConfiguration(
+                // No bounce or glow/stretch feedback when scrolling past the edges.
+                behavior: ScrollConfiguration.of(context).copyWith(
+                  physics: const ClampingScrollPhysics(),
+                  overscroll: false,
+                ),
+                child: ListView(
+                  children: <Widget>[
+                    if (kDebugMode) ...[
+                      CalculatorTypeListTile(),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 5),
+                        child: Divider(thickness: 1),
+                      ),
+                    ],
+                    SystemThemeSwitchListTile(),
+                    ThemeSwitchListTile(),
+                    if (orientation == Orientation.landscape)
+                      _buildPartnershipAndAd(),
                   ],
-                  SystemThemeSwitchListTile(),
-                  ThemeSwitchListTile(),
-                  if (orientation == Orientation.landscape)
-                    _buildPartnershipAndAd(),
-                ],
+                ),
               ),
             ),
             if (orientation == Orientation.portrait) _buildPartnershipAndAd(),
