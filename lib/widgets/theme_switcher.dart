@@ -8,6 +8,8 @@ typedef OnChangeCallback = void Function(bool isDark);
 /// On: dark mode
 ///
 /// Off: light mode
+///
+/// Always available. Changing it turns off "Use system".
 class ThemeSwitchListTile extends StatelessWidget {
   final OnChangeCallback? onChange;
 
@@ -23,18 +25,20 @@ class ThemeSwitchListTile extends StatelessWidget {
 
     return SwitchListTile.adaptive(
       activeColor: CompanionTheme.primaryColor,
-      title: const Text("Dark Mode"),
-      value: brightness == Brightness.light ? false : true,
-      onChanged: themeState.mode == ThemeMode.system
-          ? null
-          : (isDark) {
-              themeState.switchMode(isDark ? ThemeMode.dark : ThemeMode.light);
-              onChange != null ? onChange!(isDark) : null;
-            },
+      title: const Text("Dark mode"),
+      // Follows the system theme while "Use system" is on.
+      value: brightness == Brightness.dark,
+      onChanged: (isDark) {
+        themeState.switchMode(isDark ? ThemeMode.dark : ThemeMode.light);
+        onChange?.call(isDark);
+      },
     );
   }
 }
 
+/// On: follow the system theme, and "Dark mode" shows the system theme.
+///
+/// Off: keep the current theme as a manual choice.
 class SystemThemeSwitchListTile extends StatelessWidget {
   const SystemThemeSwitchListTile({
     super.key,
@@ -46,7 +50,7 @@ class SystemThemeSwitchListTile extends StatelessWidget {
     final brightness = Theme.of(context).brightness;
 
     return SwitchListTile.adaptive(
-      title: const Text("Auto Dark Mode"),
+      title: const Text("Use system"),
       subtitle: const Text("Follow OS setting"),
       value: themeState.mode == ThemeMode.system ? true : false,
       activeColor: CompanionTheme.primaryColor,
@@ -59,6 +63,27 @@ class SystemThemeSwitchListTile extends StatelessWidget {
                   : ThemeMode.dark,
         );
       },
+    );
+  }
+}
+
+/// Section heading for the theme switches.
+class ThemeSectionHeader extends StatelessWidget {
+  const ThemeSectionHeader({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+
+    return Semantics(
+      header: true,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(16, 16, 16, 4),
+        child: Text(
+          "Theme",
+          style: textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
+        ),
+      ),
     );
   }
 }

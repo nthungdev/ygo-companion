@@ -182,6 +182,7 @@ class _SettingScreenState extends State<SettingScreen> {
                       child: Divider(thickness: 1),
                     ),
                   ],
+                  ThemeSectionHeader(),
                   SystemThemeSwitchListTile(),
                   ThemeSwitchListTile(),
                   if (orientation == Orientation.landscape)
