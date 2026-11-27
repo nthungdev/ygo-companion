@@ -81,10 +81,7 @@ class ThemeSectionHeader extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(16, 16, 16, 4),
         child: Text(
           "Theme",
-          style: textTheme.titleSmall?.copyWith(
-            color: CompanionTheme.primaryColor,
-            fontWeight: FontWeight.w600,
-          ),
+          style: textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
         ),
       ),
     );
