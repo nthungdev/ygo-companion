@@ -55,8 +55,6 @@ class CalculatorState extends ChangeNotifier {
       case "=":
         Parser p = Parser();
 
-        // TODO: Test and fix bug with symbol ( )
-
         try {
           final calculation = formatExpression(selectedPlayer.calculation);
           print('calculation $calculation');

@@ -8,6 +8,57 @@ String durationToDigital(Duration duration) {
   return "${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}";
 }
 
+/// Tidy up the parentheses in a list of expression tokens:
+/// - drops a ")" that has no matching "("
+/// - appends the ")" missing for each unclosed "("
+/// - drops empty "()" pairs
+List<String> cleanParentheses(List<String> tokens) {
+  final result = <String>[];
+  var depth = 0;
+
+  for (final token in tokens) {
+    if (token == "(") {
+      depth++;
+      result.add(token);
+    } else if (token == ")") {
+      if (depth == 0) continue;
+      depth--;
+      if (result.isNotEmpty && result.last == "(") {
+        // empty pair "()"
+        result.removeLast();
+      } else {
+        result.add(token);
+      }
+    } else {
+      result.add(token);
+    }
+  }
+
+  // Close what is still open. Drop an opening "(" that would end up empty.
+  while (depth > 0) {
+    if (result.isNotEmpty && result.last == "(") {
+      result.removeLast();
+    } else {
+      result.add(")");
+    }
+    depth--;
+  }
+
+  return result;
+}
+
+/// Join tokens with single spaces, except no space after "(" or before ")".
+String _joinTokens(List<String> tokens) {
+  final buffer = StringBuffer();
+  for (var i = 0; i < tokens.length; i++) {
+    if (i > 0 && tokens[i - 1] != "(" && tokens[i] != ")") {
+      buffer.write(" ");
+    }
+    buffer.write(tokens[i]);
+  }
+  return buffer.toString();
+}
+
 /// Clean up unnecessary stuff in the expression
 /// Returns null if invalid
 String? formatExpression(String expression) {
@@ -16,7 +67,7 @@ String? formatExpression(String expression) {
   const specials = "()";
   // Symbols
   List<String> l = [];
-  if (!operators.contains(expression[0])) {
+  if (expression.isEmpty || !operators.contains(expression[0])) {
     return null;
   }
 
@@ -44,6 +95,8 @@ String? formatExpression(String expression) {
     }
   }
 
+  l = cleanParentheses(l);
+
   List<String> formatted = [];
   int i = 0;
   while (i < l.length) {
@@ -68,5 +121,5 @@ String? formatExpression(String expression) {
 
     i++;
   }
-  return formatted.join(" ");
+  return _joinTokens(formatted);
 }
