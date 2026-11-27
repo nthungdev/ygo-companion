@@ -14,12 +14,21 @@ class ThemeState with ChangeNotifier {
 
   bool get isDarkMode => Theme.of(_context).brightness == Brightness.dark;
 
+  static const _modeKey = "themeMode";
+
   ThemeMode _mode = ThemeMode.system;
   final SharedPreferences _prefs;
 
   ThemeMode get mode => _mode;
 
   ThemeState(this._prefs) {
+    final saved = _prefs.getString(_modeKey);
+    if (saved != null) {
+      _mode = ThemeMode.values.asNameMap()[saved] ?? ThemeMode.system;
+      return;
+    }
+
+    // Value saved by earlier versions. It could not tell "system" apart.
     final isDark = _prefs.getBool("darkTheme");
     _mode = isDark == null
         ? ThemeMode.system
@@ -34,9 +43,6 @@ class ThemeState with ChangeNotifier {
     _mode = mode;
     notifyListeners();
 
-    await _prefs.setBool(
-      "darkTheme",
-      mode == ThemeMode.dark || mode == ThemeMode.light,
-    );
+    await _prefs.setString(_modeKey, mode.name);
   }
 }
